@@ -1,0 +1,142 @@
+.info {
+  width: calc(100% - 2 * 70px);
+  height: 608px;
+  padding: 0;
+  margin: 0 auto;
+
+}
+
+.info__border {
+  height: 160px;
+  border-bottom: 1px solid #000;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+}
+
+.info__title {
+  padding: 110px 0 23px 0;
+  font-size: 22px;
+  line-height: 27px;
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: -0.04em;
+}
+
+.info__container{
+  width: 100%;
+  display: grid;
+  grid-template-columns: fit-content(550px) fit-content(550px);
+  margin: 0 auto;
+  padding: 70px 0 0 0;
+  gap: 40px;
+  justify-items: start;
+  text-align: start;
+}
+
+.info__subtitle{
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+}
+
+.info__text{
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  margin: 0;
+  padding: 26px 0 0 0;
+}
+
+.info__timecode{
+display: flex;
+width: 100%;
+height: 36px;
+justify-content: center;
+margin: 0;
+padding: 110px 0 17px 0;
+}
+
+.info__timecode_backend{
+  width: 20%;
+  height: 70px;
+  margin: 0;
+  padding: 0;
+}
+
+.info__timecode_frontend{
+  width: 80%;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+}
+
+.info__timecode-title{
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info__backend_title{
+  background-color: #2BE080;
+}
+
+.info__frontend_title{
+  background-color: #F2F2F2;
+}
+
+.info__timecode-text{
+  color:#A0A0A0;
+  padding: 17px 0 0 0;
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+  text-align: center;
+  margin: 0;
+}
+
+.info__timecode-subtitle{
+  display: flex;
+  width: 100%;
+  height: 17px;
+  justify-content: center;
+  margin: 0;
+  padding: 0 0 107px 0;
+}
+
+@media screen and (max-width: 768px) {
+  .info  {
+    width: calc(100% - 2 * 50px);
+    height: 585px;
+  }
+  .info__border{
+    height: 140px;
+  }
+  .info__title{
+    padding: 90px 0 23px 0;
+  }
+  .info__text{
+    padding: 22px 0 0 0;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .info__timecode{
+    padding: 93px 0 14px 0;
+  }
+  .info__container{
+    grid-template-columns: fit-content(319px) fit-content(319px);
+    gap: 30px;
+  }
+  .info__timecode-text{
+    padding: 14px 0 0 0;
+  }
+}
