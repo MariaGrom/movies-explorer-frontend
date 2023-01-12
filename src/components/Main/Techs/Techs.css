@@ -78,30 +78,64 @@
 }
 
 @media screen and (max-width: 768px) {
-  .techs  {
+  .techs {
     height: 567px;
   }
-  .techs__border{
+  .techs__border {
     height: 140px;
     width: calc(100% - 2 * 50px);
   }
-  .techs__content{
+  .techs__content {
     width: calc(100% - 2 * 50px);
     padding: 80px 0 83px 0;
   }
-  .techs__title{
+  .techs__title {
     padding: 90px 0 23px 0;
   }
-  .techs__text{
+  .techs__text {
     padding: 22px 0 0 0;
     font-size: 12px;
     line-height: 18px;
   }
-  .techs__list-item{
+  .techs__list-item {
     width: 84px;
     height: 57px;
   }
-  .techs__list{
+  .techs__list {
     max-width: calc(100% - 2 * 60px);
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .techs {
+    height: 651px;
+    background-color: #fff;
+  }
+  .techs__title {
+    padding: 70px 0 28px 0;
+  }
+  .techs__border {
+    width: calc(100% - 2 * 18px);
+    height: 120px;
+  }
+  .techs__content {
+    width: calc(100% - 2 * 14px);
+    padding: 60px 0 50px 0;
+  }
+  .techs__subtitle {
+    font-size: 30px;
+    line-height: 36px;
+  }
+  .techs__text {
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .techs__list {
+    justify-content: space-between;
+      max-width: calc(100% - 2 * 71px);
+  }
+  .techs__list-text {
+    font-size: 12px;
+    line-height: 15px;
   }
 }

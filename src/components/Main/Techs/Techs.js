@@ -19,7 +19,7 @@ function Techs() {
       <li className="techs__list-item"><p className="techs__list-text">React</p></li>
       <li className="techs__list-item"><p className="techs__list-text">Git</p></li>
       <li className="techs__list-item"><p className="techs__list-text">Exspress.js</p></li>
-      <li className="techs__list-item"><p className="techs__list-text">Mobgodb</p></li>
+      <li className="techs__list-item"><p className="techs__list-text">mobgodb</p></li>
       
     </ul>
     </div>

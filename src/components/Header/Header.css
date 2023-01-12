@@ -50,6 +50,24 @@
     padding: 0 0 0 30px;
   }
   .header__menu {
-  padding: 0 30px 0 0;
+    padding: 0 30px 0 0;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .header__logo {
+    padding: 0 0 0 14px;
+  }
+  .header__menu {
+    padding: 0 14px 0 0;
+  }
+  .header__button {
+    width: 54px;
+    height: 26px;
+    font-size: 10px;
+  }
+  .header__link {
+    font-size: 10px;
+    padding: 0 14px 0 0;
   }
 }

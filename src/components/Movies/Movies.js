@@ -1,9 +1,14 @@
 import React from 'react';
+import './Movies.css';
+import SearchForm from './SearchForm/SearchForm';
+import MoviesCardList from './MoviesCardList/MoviesCardList';
+
 
 function Movies(){
   return(
-<div>
-  <h1>Страница с фильмами</h1>
+<div className="Movies">
+<SearchForm />
+<MoviesCardList />
 </div>
   );
 }

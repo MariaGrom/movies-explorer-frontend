@@ -33,15 +33,32 @@
   letter-spacing: -0.04em;
 }
 
-
 @media screen and (max-width: 768px) {
   .promo {
     height: 784px;
   }
-  .promo__img{
-    top:224px;
+  .promo__img {
+    top: 224px;
   }
-  .promo__title{
+  .promo__title {
     padding: 326px 0 0 0;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .promo {
+    height: 570px;
+  }
+  .promo__img {
+    width: 248px;
+    height: 248px;
+    top: 142px;
+    background-size: contain;
+  }
+  .promo__title {
+    max-width: 300px;
+    font-size: 31px;
+    line-height: 39px;
+    padding: 207px 0 0 0;
   }
 }
