@@ -3,17 +3,15 @@
   height: 247px;
   margin: 0;
   padding: 0;
-  border: 1px solid red;
 }
 
 .searchform__form {
-  max-width: 1140px;
+  max-width: calc(100% - 2 * 70px);
   height: 46px;
   padding: 60px 0 0 0;
   position: relative;
   margin: 0 auto;
   display: flex;
-  border: red 1px solid;
 }
 
 .searchform__input {
@@ -24,23 +22,32 @@
   background-color: #f9f9f9;
   border-radius: 40px;
   border: none;
+  font-size: 13px;
+  line-height: 17px;
+  font-size: 400;
+  color: #A0A0A0;
 }
 
 .searchform__button {
   background-image: url("../../../img/find.svg");
-  width: 34px;
-  height: 34px;
+  width: 35px;
+  height: 35px;
   padding: 0;
   margin: 0;
   border: none;
   position: absolute;
   top: 66px;
   right: 6px;
+  background-color: #f9f9f9;
+  background-repeat: no-repeat;
 }
 
 .searchform__checkbox{
   margin: 0;
   padding: 42px 0 0 0;
+  display: flex;
+  /* border: 1px solid red; */
+  justify-content: center;
 }
 
 .searchform__text{
@@ -48,7 +55,7 @@
   line-height: 18px;
   font-weight: 400;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 12px;
 }
 
 .searchform__border{
@@ -57,4 +64,31 @@
   margin: 70px auto 0;
   padding: 0;
   background-color: #E8E8E8;
+}
+
+
+@media screen and (max-width: 768px) {
+  .searchform__form {
+    max-width: calc(100% - 2 * 30px);
+    padding: 80px 0 0 0;
+  }
+  .searchform__button{
+    top: 86px;
+  }
+  .searchform__border{
+    width: calc(100% - 2 * 30px);
+    margin: 50px auto 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .searchform__form {
+    max-width: calc(100% - 2 * 14px);
+  }
+  .searchform__border{
+    width: calc(100% - 2 * 14px);
+  }
+  .searchform__text{
+    font-size: 11px;
+  }
 }
