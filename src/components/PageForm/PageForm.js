@@ -52,7 +52,7 @@ function PageForm(props) {
   return (
     <form className="form">
       <div className="form__greetings" >
-        <img className="form__logo" src={logo} alt="логотип" />
+        <Link to="/"><img className="form__logo" src={logo} alt="логотип" /></Link>
         <h2 className="form__title">{title}</h2>
       </div>
       <div className="form__main">
