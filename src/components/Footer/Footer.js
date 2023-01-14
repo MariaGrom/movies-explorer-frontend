@@ -10,7 +10,7 @@ function Footer(){
     <p className="footer__copyright">&copy; 2022</p>
     <div className="footer__links">
       <a href="#" className="footer__link">Яндекс.Практикум</a>
-      <a href="#" className="footer__link">Github</a>
+      <a href="https://github.com/MariaGrom" className="footer__link">Github</a>
     </div>
   </div>
 </div>

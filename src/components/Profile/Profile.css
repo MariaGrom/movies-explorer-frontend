@@ -82,3 +82,28 @@
   margin: 0;
   color:#EE3465;
 }
+
+@media screen and (max-width: 768px) {
+  .profile__greetings {
+    padding: 236px 0 0 0;
+  }
+  .profile__user{
+    padding: 96px 0 258px 0;
+  }
+  .profile__buttons{
+    padding: 0 0 269px 0;
+  }
+}
+
+@media screen and (max-width: 448px) {
+  .profile__greetings {
+    padding: 70px 0 0 0;
+  }
+  .profile__user{
+    padding: 80px 0 379px 0;
+    max-width: 260px;
+  }
+  .profile__buttons{
+    padding: 0 0 40px 0;
+  }
+}
