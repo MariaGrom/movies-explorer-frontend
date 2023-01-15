@@ -6,10 +6,13 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
 
-function SavedMovies() {
+function SavedMovies(props) {
+
+const {loggedIn} = props
+
   return (
     <div className="savedmovies">
-      <Header />
+      <Header loggedIn={loggedIn}/>
       <SearchForm />
       <MoviesCardList />
       <Footer />

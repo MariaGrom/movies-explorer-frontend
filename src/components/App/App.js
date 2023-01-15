@@ -11,6 +11,13 @@ import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
 
 function App() {
+
+  const [loggedIn, setLoggedIn] = React.useState(true);
+  // const [user, setUser] = React.useState({
+  //   name: 'Мария',
+  //   email: 'pochta@pochta.ru'
+  // })
+
   return (
 
     <div className="App">
@@ -20,10 +27,10 @@ function App() {
 
         <Route path='/signup' element={<Register />} />
         <Route path='/signin' element={<Login />} />
-        <Route path='/' element={<Main />} />
-        <Route path='/movies' element={<Movies />} />
-        <Route path='/saved-movies' element={<SavedMovies />} />
-        <Route path='/profile' element={<Profile />} />
+        <Route path='/' element={<Main  loggedIn={loggedIn}/>} />
+        <Route path='/movies' element={<Movies loggedIn={loggedIn}/>} />
+        <Route path='/saved-movies' element={<SavedMovies loggedIn={loggedIn}/>} />
+        <Route path='/profile' element={<Profile loggedIn={loggedIn}/>} />
         <Route path='/*' element={<InfoTooltip />} />
 
         

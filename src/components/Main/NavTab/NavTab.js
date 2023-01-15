@@ -3,11 +3,11 @@ import './NavTab.css';
 
 function NavTab() {
   return (
-    <div className="navigation">
-      <ul className="navigation__list">
-        <li className="navigation__list-item"><a href="#aboutproject" className="navigation__link">О проекте</a></li>
-        <li className="navigation__list-item"><a href="#techs" className="navigation__link">Технологии</a></li>
-        <li className="navigation__list-item"><a href="#aboutme" className="navigation__link">Студент</a></li>
+    <div className="navtab">
+      <ul className="navtab__list">
+        <li className="navtab__list-item"><a href="#aboutproject" className="navtab__link">О проекте</a></li>
+        <li className="navtab__list-item"><a href="#techs" className="navtab__link">Технологии</a></li>
+        <li className="navtab__list-item"><a href="#aboutme" className="navtab__link">Студент</a></li>
       </ul>
     </div>
   );
