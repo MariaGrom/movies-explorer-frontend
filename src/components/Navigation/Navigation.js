@@ -7,27 +7,33 @@ function Navigation(props) {
 
   const { loggedIn } = props
 
+  // Стилизация навигации для залогиненного пользователя и нет
+  const navigationClass = (`navigation ${loggedIn ? 'navigation__login' : ''}`)
+
   // Стилизация кнопки для залогиненного пользователя и нет
   const buttonText = loggedIn ? '' : 'Войти';
   const buttonClass = (
-    `header__button ${loggedIn ? 'header__button_login' : 'header__button_logout'}`
+    `navigation__button ${loggedIn ? 'navigation__button_login' : 'navigation__button_logout'}`
   )
 
   // Стилизация ссылки для залогиненного пользователя и нет
   const linkText = loggedIn ? 'Аккаунт' : 'Регистрация';
   const linkClass = (
-    `header__link ${loggedIn ? 'header__link_login' : 'header__link_logout'}`
+    `navigation__link ${loggedIn ? 'navigation__link_login' : 'navigation__link_logout'}`
   )
+  const linkPath = loggedIn ? '/profile' : '/signup';
 
   return (
-    <nav className="navigation">
-      <div className="navigation__menu">
-        <Link to="/movies" className="navigation__link navigation__link_active">Фильмы</Link>
-        <Link to='/saved-movies' className="navigation__link">Сохранённые фильмы</Link>
-      </div>
+    <nav className={navigationClass}>
+
+      {loggedIn && <div className="navigation__menu">
+        <Link to="/movies" className="navigation__title navigation__title_active">Фильмы</Link>
+        <Link to='/saved-movies' className="navigation__title">Сохранённые фильмы</Link>
+      </div>}
+
       <div className="navigation__profile">
-        <div className="header__menu">
-          <Link to="/signup" className={linkClass}>{linkText}</Link>
+        <div className="navigation__account">
+          <Link to={linkPath} className={linkClass}>{linkText}</Link>
           <button className={buttonClass}>{buttonText}</button>
         </div>
       </div>
