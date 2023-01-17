@@ -1,6 +1,6 @@
 import React from "react";
 import './MoviesCard.css';
-import movie from '../../../img/movie.png';
+import movie from '../../../img/movie-min.png';
 
 function MoviesCard() {
   return (
@@ -11,7 +11,7 @@ function MoviesCard() {
             <h2 className="moviescard__title">33 слова о дизайне</h2>
             <h3 className="moviescard__subtitle">2ч42м</h3>
           </div>
-          <button className="moviescard__button"></button>
+          <button className="moviescard__button moviescard__button_delete"></button>
         </div>
       </li>
   )

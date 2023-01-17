@@ -1,10 +1,10 @@
 import React from "react";
 import './PageForm.css';
-import logo from '../../img/logo.svg';
+import logo from '../../img/logo-min.png';
 import { Link } from 'react-router-dom';
 
 function PageForm(props) {
-  const { children, title, buttonText, spanText, linkText } = props
+  const { children, title, buttonText, spanText, linkText, linkPath } = props
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -88,7 +88,7 @@ function PageForm(props) {
         </fieldset>
         <div className="form__submit">
           <button type="submit" className="form__submit-button">{buttonText}</button>
-          <span className="form__subtitle">{spanText}<Link to="/signin" className="form__link">{linkText}</Link></span>
+          <span className="form__subtitle">{spanText}<Link to={linkPath} className="form__link">{linkText}</Link></span>
         </div>
       </div>
     </form>

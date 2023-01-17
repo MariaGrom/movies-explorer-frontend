@@ -13,14 +13,10 @@ import InfoTooltip from '../InfoTooltip/InfoTooltip';
 function App() {
 
   const [loggedIn, setLoggedIn] = React.useState(true);
-  // const [user, setUser] = React.useState({
-  //   name: 'Мария',
-  //   email: 'pochta@pochta.ru'
-  // })
 
   return (
 
-    <div className="App">
+    <div className="app">
 
       <Routes>
 

@@ -53,7 +53,7 @@
 }
 
 .moviescard__button{
-  background-image: url('../../../img/saved_off.svg');
+  background-image: url('../../../img/saved_off-min.png');
   width: 28px;
   height: 28px;
   margin: 0;
@@ -66,16 +66,14 @@
 }
 
 .moviescard__button_saved{
-  background-image: url('../../../img/saved_on.svg');
-  width: 28px;
-  height: 28px;
-  margin: 0;
-  padding: 0;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border: none;
-  background-color: #FDFDFD;
-  cursor: pointer;
+  background-image: url('../../../img/saved_on-min.png');
+}
+
+.moviescard__button_delete{
+  background-image: url('../../../img/delete-min.png');
+  width: 16px;
+  height: 16px;
+
 }
 
 .moviescard__button:hover {

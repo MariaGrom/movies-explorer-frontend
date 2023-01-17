@@ -9,6 +9,7 @@ function Login() {
       buttonText="Войти"
       spanText="Ещё не зарегистрированы?"
       linkText="Регистрация"
+      linkPath="/signup"
     />
   );
 }

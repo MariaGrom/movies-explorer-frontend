@@ -11,7 +11,7 @@ import Footer from '../Footer/Footer';
 
 function Main(){
   return(
-<div className="Main">
+<div className="main">
 <Header />
 <Promo />
 <NavTab />

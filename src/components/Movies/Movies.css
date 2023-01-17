@@ -2,6 +2,8 @@
   width: 100%;
   margin: 0 auto;
   padding: 0 0 80px 0;
+  display: flex;
+  justify-content: center;
 }
 
 .movies__button {
@@ -15,6 +17,12 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 15px;
+  cursor: pointer;
+}
+
+.movies__button:hover {
+  opacity: 0.8;
+  transition: opacity 0.4s linear 0.1s;
 }
 
 @media screen and (max-width: 400px) {

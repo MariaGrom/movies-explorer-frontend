@@ -9,10 +9,11 @@ function Register() {
       buttonText="Зарегистрироваться"
       spanText="Уже зарегистрированы?"
       linkText="Войти"
+      linkPath="/signin"
       children={
         <label className="form__field">
         <p className="form__text">Имя</p>
-        <input id="input__name" className="form__input" />
+        <input id="input__name" className="form__input  form__input_error" />
         <span className="input__error input__error-name">Текст ошибки</span>
       </label>
       }
