@@ -9,31 +9,22 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
-
 function App() {
 
   const [loggedIn, setLoggedIn] = React.useState(true);
 
   return (
-
     <div className="app">
-
       <Routes>
-
-
         <Route path='/signup' element={<Register />} />
         <Route path='/signin' element={<Login />} />
-        <Route path='/' element={<Main  loggedIn={loggedIn}/>} />
-        <Route path='/movies' element={<Movies loggedIn={loggedIn}/>} />
-        <Route path='/saved-movies' element={<SavedMovies loggedIn={loggedIn}/>} />
-        <Route path='/profile' element={<Profile loggedIn={loggedIn}/>} />
+        <Route path='/' element={<Main loggedIn={loggedIn} />} />
+        <Route path='/movies' element={<Movies loggedIn={loggedIn} />} />
+        <Route path='/saved-movies' element={<SavedMovies loggedIn={loggedIn} />} />
+        <Route path='/profile' element={<Profile loggedIn={loggedIn} />} />
         <Route path='/*' element={<InfoTooltip />} />
-
-        
-    </Routes>
-      </div >
-
-  
+      </Routes>
+    </div >
   );
 }
 
