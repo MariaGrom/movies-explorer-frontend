@@ -5,7 +5,7 @@ import avatar from '../../../img/profile_avatar-min.png';
 
 function AboutMe() {
   return (
-    <div className="aboutme" id="aboutme">
+    <section className="aboutme" id="aboutme">
       <div className="info__border">
         <h2 className="info__title">Студент</h2>
       </div>
@@ -21,7 +21,7 @@ function AboutMe() {
         </div>
         <img className="aboutme__avatar" src={avatar} alt="Аватар" />
       </div>
-    </div>
+    </section>
   )
 }
 

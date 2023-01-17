@@ -4,7 +4,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 
 function MoviesCardList() {
   return (
-    <div className="moviescardlist">
+    <section className="moviescardlist">
       <ul className="moviescardlist__list">
         <MoviesCard />
         <MoviesCard />
@@ -15,9 +15,7 @@ function MoviesCardList() {
         <MoviesCard />
         <MoviesCard /> */}
       </ul>
-
-
-    </div>
+    </section>
   )
 }
 

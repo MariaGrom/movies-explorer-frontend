@@ -71,13 +71,6 @@ function Navigation(props) {
           <button className="navigation__button-close" onClick={closeNavigationSidebar}></button>
         </div>
       </div>}
-
-
-
-
-
-
-
     </nav>
   )
 }

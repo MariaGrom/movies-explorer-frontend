@@ -9,8 +9,7 @@ function Profile(props) {
   return (
     <div>
       <Header loggedIn={loggedIn} />
-
-      <div className="profile">
+      <section className="profile">
         <h2 className="profile__greetings">Привет, Виталий!</h2>
         <fieldset className="profile__user">
           <label className="profile__data">
@@ -34,13 +33,12 @@ function Profile(props) {
             />
           </label>
         </fieldset >
-
         <div className="profile__buttons">
           <span className="profile__error">При обновлении профиля произошла ошибка.</span>
           <button className="profile__button profile__edit">Редактировать</button>
           <button className="profile__button profile__checkout">Выйти из аккаунта</button>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

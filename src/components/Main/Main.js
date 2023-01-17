@@ -9,18 +9,18 @@ import Portfolio from './Portfolio/Portfolio';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
-function Main(){
-  return(
-<div className="main">
-<Header />
-<Promo />
-<NavTab />
-<AboutProject />
-<Techs />
-<AboutMe />
-<Portfolio />
-<Footer />
-</div>
+function Main() {
+  return (
+    <section className="main">
+      <Header />
+      <Promo />
+      <NavTab />
+      <AboutProject />
+      <Techs />
+      <AboutMe />
+      <Portfolio />
+      <Footer />
+    </section>
   );
 }
 
