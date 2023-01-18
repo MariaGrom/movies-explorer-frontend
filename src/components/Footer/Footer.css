@@ -1,6 +1,7 @@
 .footer {
   height: 172px;
   background-color: #fafafa;
+  width: 100%;
 }
 
 .footer__text {

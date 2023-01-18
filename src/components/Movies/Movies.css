@@ -1,3 +1,9 @@
+.movies{
+  width: 100%;
+  padding: 0;
+  margin: 0 auto;
+}
+
 .movies__add-button {
   width: 100%;
   margin: 0 auto;
@@ -5,6 +11,7 @@
   display: flex;
   justify-content: center;
 }
+
 
 .movies__button {
   width: 320px;
@@ -18,11 +25,6 @@
   font-size: 12px;
   line-height: 15px;
   cursor: pointer;
-}
-
-.movies__button:hover {
-  opacity: 0.8;
-  transition: opacity 0.4s linear 0.1s;
 }
 
 @media screen and (max-width: 400px) {

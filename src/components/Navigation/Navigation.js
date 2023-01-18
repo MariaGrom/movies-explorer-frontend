@@ -37,7 +37,7 @@ function Navigation(props) {
 
   //Стилизация аккаунта для залогиненного пользователя и нет
   const accountClass = (
-    ` ${loggedIn ? 'navigation__account' : 'navigation__account_logout'}`
+    ` ${loggedIn ? 'navigation__account' : 'navigation__account-logout'}`
   )
 
 
@@ -53,7 +53,6 @@ function Navigation(props) {
         <Link to={linkPath} className={linkClass}>{linkText}</Link>
         <Link to={buttonPath} className={buttonClass}>{buttonText}</Link>
       </div>
-
 
       {loggedIn && <button className="navigation__burger" onClick={openNavigationSidebar}></button>}
 

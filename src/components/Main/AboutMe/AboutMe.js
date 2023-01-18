@@ -6,8 +6,8 @@ import avatar from '../../../img/profile_avatar-min.png';
 function AboutMe() {
   return (
     <section className="aboutme" id="aboutme">
-      <div className="info__border">
-        <h2 className="info__title">Студент</h2>
+      <div className="aboutme__border">
+        <h2 className="aboutme__title">Студент</h2>
       </div>
       <div className="aboutme__profile">
         <div className="aboutme__discription">
@@ -17,7 +17,7 @@ function AboutMe() {
             и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал кодить. С&nbsp;2015 года работал
             в компании «СКБ Контур». После того, как прошёл курс по веб-&nbsp;разработке, начал заниматься
             фриланс-&nbsp;заказами и ушёл с постоянной работы.</p>
-          <a className="aboutme__link" href="https://github.com/MariaGrom" target="_blank">Github</a>
+          <a className="aboutme__link" href="https://github.com/MariaGrom" target="_blank" rel="noreferrer">Github</a>
         </div>
         <img className="aboutme__avatar" src={avatar} alt="Аватар" />
       </div>

@@ -16,10 +16,10 @@ function Header(props) {
 
   return (
 
-    <div className={headerClass}>
+    <header className={headerClass}>
       <Link to="/" className="header__logo-link"><img className="header__logo" src={logo} alt="Логотип" /></Link>
       <Navigation loggedIn={loggedIn} />
-    </div>
+    </header>
   );
 }
 

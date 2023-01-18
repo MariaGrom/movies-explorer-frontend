@@ -11,7 +11,8 @@ function Movies(props) {
   const { loggedIn } = props
 
   return (
-    <section className="Movies">
+    
+    <section className="movies">
       <Header loggedIn={loggedIn} />
       <SearchForm />
       <MoviesCardList />

@@ -6,18 +6,18 @@ function Portfolio() {
   return (
     <section className="portfolio">
       <h4 className="portfolio__title">Портфолио</h4>
-      <div className="portfolio__links">
-        <a href="https://mariagrom.github.io/how-to-learn/" className="portfolio__subtitle" target="_blank">Статичный сайт</a>
-        <a href="https://mariagrom.github.io/how-to-learn/" target="_blank"><img className="portfolio__link" src={link} alt="Ссылка" /></a>
-      </div>
-      <div className="portfolio__links">
-        <a href="https://mariagrom.github.io/russian-travel/" className="portfolio__subtitle" target="_blank">Адаптивный сайт</a>
-        <a href="https://mariagrom.github.io/russian-travel/" target="_blank"><img className="portfolio__link" src={link} alt="Ссылка" /></a>
-      </div>
-      <div className="portfolio__links">
-        <a href="https://mariagrom.github.io/mesto/" className="portfolio__subtitle" target="_blank">Одностраничное приложение</a>
-        <a href="https://mariagrom.github.io/mesto/" target="_blank"><img className="portfolio__link" src={link} alt="Ссылка" /></a>
-      </div>
+      <a href="https://mariagrom.github.io/how-to-learn/" className="portfolio__link" target="_blank" rel="noreferrer">
+        <p  className="portfolio__subtitle">Статичный сайт</p>
+        <img className="portfolio__img" src={link} alt="Ссылка" />
+      </a>
+      <a href="https://mariagrom.github.io/russian-travel/" className="portfolio__link" target="_blank" rel="noreferrer">
+        <p className="portfolio__subtitle">Адаптивный сайт</p>
+        <img className="portfolio__img" src={link} alt="Ссылка" />
+      </a>
+      <a href="https://mariagrom.github.io/mesto/" className="portfolio__link" target="_blank" rel="noreferrer">
+        <p className="portfolio__subtitle">Одностраничное приложение</p>
+        <img className="portfolio__img" src={link} alt="Ссылка" />
+      </a>
     </section>
   )
 }

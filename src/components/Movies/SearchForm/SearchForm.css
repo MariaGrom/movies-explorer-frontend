@@ -28,6 +28,10 @@
   color: #A0A0A0;
 }
 
+.searchform__input:focus{
+  outline: 1px solid #2BE080;
+}
+
 .searchform__button {
   background-image: url("../../../img/search-min.png");
   width: 35px;

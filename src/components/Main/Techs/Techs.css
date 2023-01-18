@@ -16,6 +16,11 @@
 
 .techs__title {
   padding: 100px 0 23px 0;
+  font-size: 22px;
+  line-height: 27px;
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: -0.04em;
 }
 
 .techs__content {
@@ -114,6 +119,8 @@
   }
   .techs__title {
     padding: 70px 0 28px 0;
+    font-size: 18px;
+    line-height: 22px;
   }
   .techs__border {
     width: calc(100% - 2 * 18px);

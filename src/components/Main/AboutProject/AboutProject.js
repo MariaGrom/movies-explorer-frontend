@@ -3,29 +3,29 @@ import './AboutProject.css'
 
 function AboutProject() {
   return (
-    <section className="info" id="aboutproject">
-      <div className="info__border">
-        <h2 className="info__title">О проекте</h2>
+    <section className="aboutproject" id="aboutproject">
+      <div className="aboutproject__border">
+        <h2 className="aboutproject__title">О проекте</h2>
       </div>
-      <div className="info__container">
-        <div className="info__discription">
-          <p className="info__subtitle">Дипломный проект включал 5 этапов</p>
-          <p className="info__text">Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.</p>
+      <div className="aboutproject__container">
+        <div className="aboutproject__discription">
+          <p className="aboutproject__subtitle">Дипломный проект включал 5 этапов</p>
+          <p className="aboutproject__text">Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.</p>
         </div>
-        <div className="info__discription">
-          <p className="info__subtitle">На выполнение диплома ушло 5 недель</p>
-          <p className="info__text">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
+        <div className="aboutproject__discription">
+          <p className="aboutproject__subtitle">На выполнение диплома ушло 5 недель</p>
+          <p className="aboutproject__text">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
         </div>
       </div>
 
-      <div className="info__timecode">
-        <div className="info__timecode_backend">
-          <p className="info__timecode-title info__backend_title">1 неделя</p>
-          <p className="info__timecode-text">Back-end</p>
+      <div className="aboutproject__timecode">
+        <div className="aboutproject__backend">
+          <p className="aboutproject__timecode-title aboutproject__timecode-title_backend">1 неделя</p>
+          <p className="aboutproject__timecode-text">Back-end</p>
         </div>
-        <div className="info__timecode_frontend">
-          <p className="info__timecode-title info__frontend_title">4 недели</p>
-          <p className="info__timecode-text">Front-end</p>
+        <div className="aboutproject__frontend">
+          <p className="aboutproject__timecode-title aboutproject__timecode-title_frontend">4 недели</p>
+          <p className="aboutproject__timecode-text">Front-end</p>
         </div>
       </div>
     </section>

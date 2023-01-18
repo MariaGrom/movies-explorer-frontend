@@ -11,7 +11,7 @@ import Footer from '../Footer/Footer';
 
 function Main() {
   return (
-    <section className="main">
+    <main className="main">
       <Header />
       <Promo />
       <NavTab />
@@ -20,7 +20,7 @@ function Main() {
       <AboutMe />
       <Portfolio />
       <Footer />
-    </section>
+    </main>
   );
 }
 
