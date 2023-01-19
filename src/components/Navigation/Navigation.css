@@ -1,0 +1,311 @@
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  align-items: center;
+  width: 60%;
+}
+
+.navigation_logout {
+  width: fit-content;
+}
+
+.navigation__menu {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.navigation__title {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  cursor: pointer;
+  color: #000;
+}
+
+.navigation__title:last-of-type {
+  padding: 0 0 0 16px;
+}
+
+.navigation__title_active {
+  font-weight: 500;
+}
+
+.navigation__title:hover {
+  opacity: 0.7;
+  transition: opacity 0.4s linear 0.1s;
+}
+
+.navigation__account {
+  padding: 0 70px 0 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.navigation__account-logout {
+  padding: 0 70px 0 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.navigation__button {
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.navigation__button:hover {
+  opacity: 0.8;
+  transition: opacity 0.4s linear 0.1s;
+}
+
+.navigation__button_logout {
+  width: 76px;
+  padding: 8px 0;
+  background-color: #2be080;
+  color: #000;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.navigation__button_logged {
+  width: 26px;
+  height: 30px;
+  background-color: #f9f9f9;
+  background-image: url("../../img/profile-min.png");
+  background-repeat: no-repeat;
+  background-size: 11.5px 14px;
+  border-radius: 4px;
+  background-position: center;
+}
+
+.navigation__button:hover {
+  opacity: 0.8;
+  transition: opacity 0.4s linear 0.1s;
+}
+
+.navigation__link {
+  text-decoration: none;
+  line-height: 16px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.navigation__link_logged {
+  font-size: 14px;
+  color: #000;
+  padding: 0 17px 0 0;
+}
+
+.navigation__link_logout {
+  font-size: 12px;
+  color: #fff;
+  padding: 0 30px 0 0;
+}
+
+.navigation__link:hover {
+  opacity: 0.7;
+  transition: opacity 0.4s linear 0.1s;
+}
+
+.navigation__burger {
+  background-image: url("../../img/burger-min.png");
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: #fff;
+  display: none;
+  cursor: pointer;
+}
+
+.navigation__burger:hover {
+  opacity: 0.7;
+  transition: opacity 0.4s linear 0.1s;
+}
+
+.navigation__sidebar {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation {
+    width: fit-content;
+  }
+  .navigation__account {
+    padding: 0 30px 0 0;
+    display: none;
+  }
+  .navigation__account-logout {
+    padding: 0 30px 0 0;
+  }
+  .navigation__burger {
+    display: block;
+    margin: 0 30px 0 0;
+  }
+  .navigation__menu {
+    display: none;
+  }
+  .navigation__logged {
+    width: fit-content;
+    padding: 0 30px 0 0;
+  }
+
+  /* Описание силей для навигации в сайд-баре */
+  .navigation__sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: rgba(0, 0, 0, 50%);
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .navigation__sidebar_opened {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .navigation__content-sidebar {
+    background: #fff;
+    color: #000;
+    padding: 0 36px 0;
+    box-sizing: border-box;
+    margin: 0;
+    display: flex;
+    z-index: 2;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+    align-items: center;
+    height: 100%;
+    width: 68%;
+    position: fixed;
+    top: 0;
+    right: 0;
+  }
+
+  .navigation__menu-sidebar {
+    list-style-type: none;
+    padding: 159px 0 0 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navigation__title-sidebar {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 0;
+    padding: 28px 0 0 0;
+  }
+
+  .navigation__title-sidebar:first-of-type {
+    padding: 0;
+  }
+
+  .navigation__title-sidebar_active {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+
+  .navigation__link-sidebar {
+    text-decoration: none;
+    color: #000;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .navigation__link-sidebar:hover {
+    opacity: 0.7;
+    transition: opacity 0.4s linear 0.1s;
+  }
+
+  .navigation__account-sidebar {
+    display: flex;
+    padding: 0 0 92px 0;
+    margin: 0;
+    align-items: center;
+  }
+
+  .navigation__button-close {
+    position: absolute;
+    width: 29px;
+    height: 29px;
+    top: 22px;
+    right: 22px;
+    background-image: url("../../img/close-min.png");
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+  .navigation__button-close:hover{
+    opacity: 0.7;
+    transition: opacity 0.4s linear 0.1s;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .navigation__account {
+    padding: 0 14px 0 0;
+  }
+  .navigation__button_logout {
+    width: 54px;
+    padding: 5px;
+    font-size: 10px;
+  }
+  .navigation__link_logout {
+    font-size: 10px;
+    padding: 0 14px 0 0;
+  }
+  .navigation__logged {
+    padding: 0 14px 0 0;
+  }
+  .navigation__burger {
+    margin: 0 14px 0 0;
+  }
+  .navigation__account-logout {
+    padding: 0 14px 0 0;
+  }
+
+  /* Описание боковой навигации */
+  .navigation__content-sidebar {
+    width: 100%;
+  }
+
+  .navigation__button-close {
+    top: 20px;
+    right: 20px;
+  }
+
+  .navigation__menu-sidebar {
+    padding: 144px 0 0 0;
+  }
+}

@@ -1,0 +1,7 @@
+.movies__button_hidden{
+  display: none;
+}
+
+.savedmovies__add-button{
+  padding: 0 0 90px 0;
+}
