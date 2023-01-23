@@ -3,14 +3,16 @@ import './SearchForm.css';
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 
-function SearchForm() {
+function SearchForm(props) {
   return (
     <div className="searchform">
       <form className="searchform__form">
         <input 
+        type="text"
         className="searchform__input" 
         placeholder="Фильм"
         required=""
+        onChange={props.handleChange}
         />
         <button className="searchform__button"></button>
       </form>

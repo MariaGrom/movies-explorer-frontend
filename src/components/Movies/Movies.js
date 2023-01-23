@@ -8,14 +8,18 @@ import Footer from '../Footer/Footer';
 
 function Movies(props) {
 
-  const { loggedIn } = props
+  const { loggedIn, cards } = props
 
   return (
     
     <section className="movies">
       <Header loggedIn={loggedIn} />
-      <SearchForm />
-      <MoviesCardList />
+      <SearchForm 
+      handleChange={(e)=>console.log(e.target.value)}
+      />
+      <MoviesCardList
+      // cards={cards}
+      />
       <div className="movies__add-button">
         <button className="movies__button">Ещё</button>
       </div>
