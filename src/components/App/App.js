@@ -7,9 +7,9 @@ import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
-import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import NotFound from '../NotFound/NotFound';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { mainApi } from '../../utils/MainApi'
+import  mainApi from '../../utils/MainApi'
 import moviesApi from '../../utils/MoviesApi';
 import { defaultCurrentUser, CurrentUserContext } from '../../contexts/CurrentUserContext'
 
@@ -19,15 +19,15 @@ function App() {
   // Переменные состояния зарегистрированного пользователя
   const [loggedIn, setLoggedIn] = useState(true);
 
-
   // Переменная состояния пользователя 
-  const [currentUser, setCurrentUser] = useState(defaultCurrentUser)
+  const [currentUser, setCurrentUser] = useState(defaultCurrentUser);
 
-  // // Переменная состояния карточек 
-  // const [cards, setCards] = useState([])
+  // Переменная состояния обработки запросов
+  const [statusRequest, setStatusRequest] = useState(null);
+
 
   // Навигация 
-  let navigate = useNavigate()
+  let navigate = useNavigate();
 
   // Функция получения токена
   function checkToken() {
@@ -63,7 +63,7 @@ function App() {
     mainApi.register(registrationData)
       .then((result) => {
         if (result && result.data) {
-          
+
           setCurrentUser(result.data)
           navigate('/signin')
           console.log('Регистрация прошла успешно')
@@ -72,8 +72,8 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log('Ошибка #2 при регистрации', err )
-        
+        console.log('Ошибка #2 при регистрации', err)
+
       })
   };
 
@@ -109,27 +109,13 @@ function App() {
     mainApi.setUserInfo(userData)
       .then((userDataServer) => {
         setCurrentUser({ ...currentUser, ...userDataServer })
+        setStatusRequest(200);
       })
       .catch((err) => {
         console.log(err);
+        setStatusRequest(err);
       })
   };
-
-
-  // Функция загрузки карточек 
-
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     moviesApi.getAllCards()
-  //       .then((cards) => {
-  //         setCards(cards);
-  //         console.log('Карточки загружены')
-  //       })
-  //       .catch((err) => {
-  //         console.log(err)
-  //       })
-  //   }
-  // }, loggedIn)
 
 
   return (
@@ -162,7 +148,6 @@ function App() {
           <Route path='/movies' element={
             <ProtectedRoute loggedIn={loggedIn}>
               <Movies
-                // cards={cards}
                 loggedIn={loggedIn} />
             </ProtectedRoute>
           } />
@@ -181,12 +166,13 @@ function App() {
                 logOut={logOut}
                 dataUser={currentUser}
                 onUpdateUser={handleUpdateUser}
+                userStatusRequest={statusRequest}
               />
             </ProtectedRoute>
           } />
 
           <Route path='/*'
-            element={<InfoTooltip />}
+            element={<NotFound />}
           />
 
         </Routes>

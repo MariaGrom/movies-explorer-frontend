@@ -81,8 +81,8 @@
   border: none;
 }
 
-.form__input:focus{
-  outline: 1px solid #2BE080;
+.form__input:focus {
+  outline: 1px solid #2be080;
 }
 
 .form__input_error {
@@ -125,6 +125,11 @@
 .form__submit-button:hover {
   opacity: 0.8;
   transition: opacity 0.4s linear 0.1s;
+}
+
+.form__submit-button_disabled {
+  background-color: #f8f8f8;
+  color: #000;
 }
 
 .form__subtitle {

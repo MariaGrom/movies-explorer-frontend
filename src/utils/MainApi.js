@@ -66,9 +66,38 @@ class MainApi {
       .then(this._handleResponce)
   }
 
+// Удаление карточки
+deleteCard(id) {
+  return fetch(`${this._url}/movies/${id}`,
+    {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+    .then(this._handleResponce)
 }
 
-export const mainApi = new MainApi({
+// Удаление карточки
+savedCard(card) {
+  return fetch(`${this._url}/movies`,
+    {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(card)
+    })
+    .then(this._handleResponce)
+}
+
+
+getAllCards() {
+  return fetch(`${this._url}/movies`,{ 
+    headers: this._headers 
+  })
+    .then(this._handleResponce)
+}
+
+
+}
+ const mainApi = new MainApi({
   url:"http://localhost:3003",
 
   // url: "https://api.mariagrom.movies.nomoredomains.club",
@@ -77,3 +106,5 @@ export const mainApi = new MainApi({
     "Authorization": "",
   }
 })
+
+export default mainApi

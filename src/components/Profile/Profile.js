@@ -1,44 +1,112 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './Profile.css';
 import Header from '../Header/Header';
-import {CurrentUserContext} from '../../contexts/CurrentUserContext'
+import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 
 function Profile(props) {
 
-  const { loggedIn, logOut, onUpdateUser  } = props
+  const { loggedIn, logOut, onUpdateUser, userStatusRequest } = props
 
   // Подписываемся на контекст CurrentUserContext
-  const currentUser=React.useContext(CurrentUserContext)
+  const currentUser = useContext(CurrentUserContext)
 
-  const [name, setName] = React.useState(currentUser.name);
-  const [email, setEmail] = React.useState(currentUser.email);
+  // Переменные состояния данных пользователя
+  const [name, setName] = useState(currentUser.name);
+  const [email, setEmail] = useState(currentUser.email);
 
+  // Переменные состояния ошибок при заполнении полей
+  const [nameError, setNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+
+  // Переменная состония валидности формы
+  const [formValid, setFormValid] = useState(false);
+
+  // Переменная состояния статуса изменений
+  const [messageStatus, setMessageStatus] = useState("");
+
+  // Функция изменения имени
   function handleChangeName(e) {
     setName(e.target.value);
+    const nameRegex = /^[а-яА-ЯёЁa-zA-Z -]+$/g
+    if (e.target.value.length < 3 || e.target.value.length > 30) {
+      setNameError(false);
+      setMessageStatus('Имя пользователя должно быть длинее 2 и меньше 30')
+    } else if (e.target.value.length === 0) {
+      setNameError(false);
+      setMessageStatus('Поле "Имя" не может быть пустым');
+    } else if (!nameRegex.test(String(e.target.value).toLocaleLowerCase())) {
+      setNameError(false);
+      setMessageStatus('Используется недопустимый символ в поле "Имя"');
+    } else {
+      setNameError(true);
+      setMessageStatus('');
+    }
   }
 
+  // Функция изменения почты
   function handleChangeEmail(e) {
     setEmail(e.target.value);
+    const emailRegex = /^([\w]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    if (!emailRegex.test(String(e.target.value).toLocaleLowerCase())) {
+      setEmailError(false);
+      setMessageStatus('Некорректный email');
+    } else if (e.target.value.length === 0) {
+      setEmailError(false);
+      setMessageStatus('Поле "E-mail" не может быть пустым');
+    } else {
+      setEmailError(true);
+      setMessageStatus('');
+    }
   }
 
-  //   После загрузки текущего пользователя из API
-  // его данные будут использованы в управляемых компонентах.
-  React.useEffect(() => {
+  // Отслеживание состояния валидности формы
+  useEffect(() => {
+    if (nameError || emailError) {
+      setFormValid(false)
+    } else {
+      setFormValid(true)
+    }
+  }, [nameError, emailError])
+
+  //   После загрузки текущего пользователя из API его данные будут использованы в управляемых компонентах.
+  useEffect(() => {
     setName(currentUser.name);
     setEmail(currentUser.email);
-  }, [currentUser.name, currentUser.email]);
+  }, [currentUser.name, currentUser.email, ]);
 
 
-
-    // Обработчик формы при submit
-    function handleSubmit(e) {
-      // Запрещаем браузеру переходить по адресу формы
-      e.preventDefault();
-  
-      // Передаём значения управляемых компонентов во внешний обработчик
-      onUpdateUser({name,email});
-      console.log('Данные успешно обновились!')
+  // Обработка запроса
+  function handleStatusRequest() {
+    if (userStatusRequest === 200) {
+      setMessageStatus("Изменения успешно сохранены")
+    } else if (userStatusRequest === 409) {
+      setMessageStatus("Пользователь с такой почтой уже существует")
+    } else if (userStatusRequest === 500) {
+      setMessageStatus("Произошла ошибка сервера. Попробуйте ввести изменения позднее")
+    } else {
+      setMessageStatus("")
     }
+  }
+
+  // Обработка сообщений с сервера
+  useEffect(() => {
+    handleStatusRequest()
+  }, [userStatusRequest])
+
+
+  // Обработчик формы при submit
+  function handleSubmit(e) {
+    // Запрещаем браузеру переходить по адресу формы
+    e.preventDefault();
+
+    // Передаём значения управляемых компонентов во внешний обработчик
+    onUpdateUser({ name, email });
+    setMessageStatus("Изменения успешно сохранены");
+  }
+
+
+// Определение свойств css сообщения об ошибке
+const classMessageStatus = (userStatusRequest === 200) ? 'profile__message profile__message_success' : 'profile__message';
 
   return (
     <div>
@@ -72,7 +140,7 @@ function Profile(props) {
           </label>
         </fieldset >
         <div className="profile__buttons">
-          <span className="profile__error">При обновлении профиля произошла ошибка.</span>
+           <span className={classMessageStatus}>{messageStatus}</span>
           <button type="submit" className="profile__button profile__edit" onSubmit={handleSubmit}>Редактировать</button>
           <button type="button" className="profile__button profile__checkout" onClick={logOut}>Выйти из аккаунта</button>
         </div>

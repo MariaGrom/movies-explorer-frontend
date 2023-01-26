@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function Navigation(props) {
 
   const { loggedIn } = props
-
+  
   const [isNavigationSidebar, setIsNavigationSidebar] = React.useState(false);
 
   function openNavigationSidebar() {
@@ -35,12 +35,6 @@ function Navigation(props) {
   const linkPath = loggedIn ? '/profile' : '/signup';
   const buttonPath = loggedIn ? '/profile' : '/signin';
 
-  //Стилизация аккаунта для залогиненного пользователя и нет
-  const accountClass = (
-    ` ${loggedIn ? 'navigation__account' : 'navigation__account-logout'}`
-  )
-
-
   return (
     <nav className={navigationClass}>
 
@@ -49,7 +43,7 @@ function Navigation(props) {
         <li><Link to='/saved-movies' className="navigation__title">Сохранённые фильмы</Link></li>
       </ul>}
 
-      <div className={accountClass}>
+      <div className='navigation__account'>
         <Link to={linkPath} className={linkClass}>{linkText}</Link>
         <Link to={buttonPath} className={buttonClass}>{buttonText}</Link>
       </div>

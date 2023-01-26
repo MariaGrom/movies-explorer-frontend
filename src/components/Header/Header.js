@@ -1,18 +1,16 @@
 import React from 'react';
 import logo from '../../img/logo-min.png'
 import './Header.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 
 function Header(props) {
 
   const { loggedIn } = props
 
-  // Стилизация шапки для залогиненного пользователя и нет
-  const headerClass = (
-    `header ${loggedIn ? 'header_movie' : 'header_main'}`
-  )
+  const location = useLocation();
 
+  const headerClass = (location.pathname === '/') ? 'header header_main' : 'header header_movie'
 
   return (
 
