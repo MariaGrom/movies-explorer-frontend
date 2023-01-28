@@ -44,8 +44,8 @@ function SearchForm(props) {
       ...value,
       [name]: inputValue
     }
-    if(page === 'movies'){
-    localStorage.setItem('search-movies', JSON.stringify(updatedValue));
+    if (page === 'movies') {
+      localStorage.setItem('search-movies', JSON.stringify(updatedValue));
     }
     setValue(updatedValue);
     setError((state) => ({
@@ -67,7 +67,7 @@ function SearchForm(props) {
       [name]: checked
     };
 
-    localStorage.setItem('search-movies', JSON.stringify(updatedValue)); 
+    localStorage.setItem('search-movies', JSON.stringify(updatedValue));
     setValue(updatedValue);
     filterCards(updatedValue);
   }
@@ -94,16 +94,10 @@ function SearchForm(props) {
         <span className="searchform__span"> {error.name}</span>
         <div className="searchform__checkbox">
 
-          {/* Исполнение чекбокса в коде формы поиска */}
-          <label className="switch">
-            <input onChange={handleCheckbox} type="checkbox" name='isShorts'  checked={value.isShorts} id='switch' />
-            <span className="switch__slider"></span>
-          </label>
-
-          {/* <FilterCheckbox  
-          filterCards={filterCards}
-          page="movies"
-          /> */}
+          <FilterCheckbox
+            onChange={handleCheckbox}
+            checked={value.isShorts}
+          />
 
           <p className="searchform__text">Короткометражки</p>
         </div>
