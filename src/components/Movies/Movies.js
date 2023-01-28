@@ -1,69 +1,96 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Movies.css';
 import SearchForm from './SearchForm/SearchForm';
 import MoviesCardList from './MoviesCardList/MoviesCardList';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import moviesApi from '../../utils/MoviesApi';
-import MoviesCard from './MoviesCard/MoviesCard';
 import Preloader from './Preloader/Preloader';
 import mainApi from '../../utils/MainApi';
 
+const calcCardCounter = () => {
+  const counters = {
+    start: 12,
+    load: 3
+  }
+  if (window.innerWidth < 990) {
+    counters.start = 8;
+    counters.load = 2;
+  }
+  if (window.innerWidth < 767) {
+    counters.start = 5;
+    counters.load = 1;
+  }
+  return counters
+}
 
-function Movies(props) {
 
-  const { loggedIn } = props
+function Movies({ loggedIn }) {
 
-  // Переменные состояния
-  const [buttonSearch, setButtonSearch] = useState(false);
+  const counters = calcCardCounter();
 
-
+  // Переменная состония контейнера для карточек
+  const [cardsCounter, setCardsCounter] = useState(counters.start)
+  // Переменная состония для карточек 
   const [cards, setCards] = useState([]);
-
   // Переменная состония для фильтрации фильмов
   const [filteredCards, setFilteredCards] = useState([]);
+  // Переменная поиска
+  const [searchFormWasInit, setSearchFormWasInit] = useState(false);
+  // Переменная прелоадера
+  const [statusPreloader, setStatusPreloader] = useState(false);
+
+
+  // Функция загрузки карточек
+  const loadCards = () => {
+    const counters = calcCardCounter();
+    setCardsCounter(cardsCounter + counters.load)
+  }
 
   // Функция фильтрации карточек
   const filterCards = (search) => {
-    setFilteredCards(cards.filter((card) => {
-      const isName = card.nameRU.toLowerCase().includes(search.name.toLowerCase());
-      const isShorts = search.isShorts ? card.duration <= 40 : true;
-      return isName && isShorts;
-    }))
+    setSearchFormWasInit(true)
+    // Фильтр карточек по названию и продолжительности
+    const filter = (cards) => {
+      setFilteredCards(cards.filter((card) => {
+        const isName = card.nameRU.toLowerCase().includes(search.name.toLowerCase());
+        const isShorts = search.isShorts ? card.duration <= 40 : true;
+        return isName && isShorts;
+      }))
+    }
+    if (cards.length === 0) {
+      const localMovies = JSON.parse(localStorage.getItem('local-movies') || '[]');
+
+      if (localMovies.length === 0) {
+        const token = localStorage.getItem('jwt');
+        mainApi.setToken(token);
+        setStatusPreloader(true);
+        Promise.all([moviesApi.getAllCards(), mainApi.getAllCards()])
+          .then(([beatCards, { data: myCards }]) => {
+            const preparedCards = beatCards.map(card => {
+              const myCard = myCards.find((myCard) => myCard.movieId === card.id);
+              // Задаем единое название для карточек с битфильма и карточек с нашего сервера
+              card._id = myCard !== undefined ? myCard._id : '';
+              card.movieId = card.id;
+              card.thumbnail = `https://api.nomoreparties.co/${card.image.url}`;
+              card.saved = myCard !== undefined;
+              return card;
+            })
+            setCards(preparedCards);
+            filter(preparedCards);
+            // Сохраняем фильмы с Битфильма в localStorage
+            localStorage.setItem('local-movies', JSON.stringify(preparedCards));
+            setStatusPreloader(false);
+          });
+      } else {
+        setCards(localMovies);
+        filter(localMovies);
+      }
+    } else {
+      filter(cards);
+      setCardsCounter(counters.start)
+    }
   }
-
-
-  // Задаем единое название для карточек с битфильма и карточек с нашего сервера
-  useEffect(() => {
-
-// if(cards.length === 0) {
-//   const localMovies = JSON.parse(localStorage.getItem('local-movies') || '[]');
-// if (localMovies.length === 0 {
-
-// })
-// }
-
-    const token = localStorage.getItem('jwt');
-    mainApi.setToken(token);
-
-    Promise.all([moviesApi.getAllCards(), mainApi.getAllCards()])
-      .then(([beatCards, { data: myCards }]) => {
-
-        // Сохраняем фильмы с Битфильма в localStorage
-        localStorage.setItem('local-movies', JSON.stringify(beatCards));
-
-        const preparedCards = beatCards.map(card => {
-          const myCard = myCards.find((myCard) => myCard.movieId === card.id);
-          card._id = myCard !== undefined ? myCard._id : '';
-          card.movieId = card.id;
-          card.thumbnail = `https://api.nomoreparties.co/${card.image.url}`;
-          card.saved = myCard !== undefined;
-          return card;
-        })
-        setCards(preparedCards);
-        setFilteredCards(preparedCards);
-      });
-  }, []);
 
   // Сохранение фильмов 
   const handleSavedCard = (card) => {
@@ -92,7 +119,6 @@ function Movies(props) {
         image: `https://api.nomoreparties.co/${card.image.url}`,
         trailerLink: card.trailerLink,
         thumbnail: `https://api.nomoreparties.co/${card.image.url}`,
-        owner: card.owner,
         movieId: card.id,
         nameRU: card.nameRU,
         nameEN: card.nameEN,
@@ -104,7 +130,7 @@ function Movies(props) {
             const updatedCards = beatCards.map(beatCard => {
               if (beatCard.id === serverCard.movieId) {
                 beatCard.saved = true;
-                beatCard._id = serverCard.id;
+                beatCard._id = serverCard._id;
                 beatCard.movieId = serverCard.movieId;
                 beatCard.thumbnail = serverCard.thumbnail;
               }
@@ -116,24 +142,31 @@ function Movies(props) {
         })
     }
   }
-  return (
 
+
+  return (
     <section className="movies">
       <Header loggedIn={loggedIn} />
       <SearchForm
         filterCards={filterCards}
+        page="movies"
+        searchFormWasInit={searchFormWasInit}
       />
 
       <MoviesCardList
-        cards={filteredCards}
+        cards={filteredCards.filter((_, i) => i < cardsCounter)}
         handleSavedCard={handleSavedCard}
+        loadCards={loadCards}
+        searchFormWasInit={searchFormWasInit}
       />
 
-      {buttonSearch ? <Preloader /> : null}
-      <div className="movies__border"></div>
-      <div className="movies__add-button">
-        {cards ? <button className="movies__button">Ещё</button> : ''}
-      </div>
+      {statusPreloader && <Preloader />}
+
+      {(filteredCards.length > cardsCounter) &&
+       <div className="movies__add-button">
+        <button className="movies__button" onClick={loadCards}>Ещё</button>
+      </div>}
+
       <Footer />
     </section>
   );

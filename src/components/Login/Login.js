@@ -4,22 +4,37 @@ import PageForm from '../PageForm/PageForm';
 import logo from '../../img/logo-min.png';
 import { Link } from 'react-router-dom';
 
-function Login({ onLogin }) {
+function Login({ onLogin, statusRequest }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Переменные состояния пустых полей
-  const [emailDirty, setEmailDirty] = useState(false);
-  const [passwordDirty, setPasswordDirty] = useState(false);
-
   // Переменные состояния ошибок при заполнении полей
-  const [emailError, setEmailError] = useState('Поле не может быть пустым');
-  const [passwordError, setPasswordlError] = useState('Поле не может быть пустым');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordlError] = useState('');
+
+  // Переменные валидности полей при заполнении
+  const [emailValid, setEmailValid] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(false);
+
+  // Переменная состояния статуса изменений
+  const [messageStatus, setMessageStatus] = useState("");
 
   // Переменная состония валидности формы
   const [formValid, setFormValid] = useState(false);
 
+    // Обработка запроса
+    function handleStatusRequest() {
+      if (statusRequest === 409) {
+        setMessageStatus("Пользователь с такой почтой уже существует")
+      } else if (statusRequest === 500) {
+        setMessageStatus("Произошла ошибка сервера. Попробуйте ввести изменения позднее")
+      } else if (statusRequest === 400) {
+        setMessageStatus("Некорректно введены данные")
+      } else {
+        setMessageStatus("")
+      }
+    }
 
   // Функция изменения имени пользователя и проверка формы
   function handleChangeEmail(e) {

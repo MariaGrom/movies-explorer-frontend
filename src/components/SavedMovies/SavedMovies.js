@@ -4,8 +4,8 @@ import SearchForm from '../Movies/SearchForm/SearchForm';
 import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
+import Preloader from '../Movies/Preloader/Preloader';
 
 
 function SavedMovies(props) {
@@ -15,6 +15,9 @@ function SavedMovies(props) {
   const [cards, setCards] = useState([]);
   // Переменная состония для фильтрации фильмов
   const [filteredCards, setFilteredCards] = useState([]);
+  // Переменная прелоадера
+  const [statusPreloader, setStatusPreloader] = useState(false);
+
 
   // Функция фильтрации карточек
   const filterCards = (search) => {
@@ -28,6 +31,7 @@ function SavedMovies(props) {
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     mainApi.setToken(token)
+    setStatusPreloader(true);
     const savedMovies = JSON.parse(localStorage.getItem('saved-movies') || '[]');
     if (savedMovies.length === 0) {
       mainApi.getAllCards()
@@ -35,10 +39,12 @@ function SavedMovies(props) {
           localStorage.setItem('saved-movies', JSON.stringify(serverCards.data));
           setCards(serverCards.data);
           setFilteredCards(serverCards.data);
+          setStatusPreloader(false);
         });
     } else {
       setCards(savedMovies);
       setFilteredCards(savedMovies);
+      setStatusPreloader(false);
     }
   }, [])
 
@@ -46,9 +52,17 @@ function SavedMovies(props) {
     mainApi.deleteCard(card._id)
       .then(() => {
         setFilteredCards((savedCards) => {
-         const filteredSavedCards = savedCards.filter(savedCard => savedCard._id !== card._id);
-         localStorage.setItem('saved-movies', JSON.stringify(filteredSavedCards));
-         return filteredSavedCards;
+          const localMovies = JSON.parse(localStorage.getItem('local-movies') || '[]');
+          const updatedLocalMovies = localMovies.map((movie) => {
+            if (movie.id === card.movieId) {
+              movie.saved = false;
+            }
+            return movie;
+          })
+         localStorage.setItem('local-movies', JSON.stringify(updatedLocalMovies));
+          const filteredSavedCards = savedCards.filter(savedCard => savedCard._id !== card._id);
+        localStorage.setItem('saved-movies', JSON.stringify(filteredSavedCards));
+          return filteredSavedCards;
         })
       })
   }
@@ -56,15 +70,14 @@ function SavedMovies(props) {
   return (
     <section className="savedmovies">
       <Header loggedIn={loggedIn} />
-      <SearchForm filterCards={filterCards} required={false} />
+      <SearchForm filterCards={filterCards} required={false} page="saved-movies"/>
       <MoviesCardList
         cards={filteredCards}
         handleSavedCard={handleSavedCard}
-        
       />
-      <div className="movies__add-button savedmovies__add-button">
-        <button className="movies__button movies__button_hidden">Ещё</button>
-      </div>
+    
+      {statusPreloader && <Preloader />}
+
       <Footer />
     </section>
   );

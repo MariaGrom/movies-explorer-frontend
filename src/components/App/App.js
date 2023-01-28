@@ -9,25 +9,23 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import  mainApi from '../../utils/MainApi'
-import moviesApi from '../../utils/MoviesApi';
-import { defaultCurrentUser, CurrentUserContext } from '../../contexts/CurrentUserContext'
+import mainApi from '../../utils/MainApi'
+import { defaultCurrentUser, CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 
 function App() {
 
   // Переменные состояния зарегистрированного пользователя
   const [loggedIn, setLoggedIn] = useState(true);
-
   // Переменная состояния пользователя 
   const [currentUser, setCurrentUser] = useState(defaultCurrentUser);
-
   // Переменная состояния обработки запросов
   const [statusRequest, setStatusRequest] = useState(null);
 
 
   // Навигация 
   let navigate = useNavigate();
+
 
   // Функция получения токена
   function checkToken() {
@@ -38,42 +36,44 @@ function App() {
         .then((user) => {
           if (user && user.data) {
             setCurrentUser(user.data);
+            setLoggedIn(true);
+            console.log('токен ОК');
           } else {
             setLoggedIn(false);
             navigate('/signin');
           }
         })
         .catch((err) => {
-          console.log('Ошибка токена', err)
+          console.log('Ошибка токена в АПИ' , err)
+          setLoggedIn(false)
         })
     } else {
       setLoggedIn(false);
-      navigate('/signin');
     }
   };
 
-
   useEffect(() => {
     checkToken();
-  }, [])
+  }, [loggedIn])
 
 
   // Функция регистрации пользователя 
   function handleRegister(registrationData) {
+    const email = registrationData.email;
+    const password = registrationData.password;
     mainApi.register(registrationData)
       .then((result) => {
         if (result && result.data) {
-
-          setCurrentUser(result.data)
-          navigate('/signin')
-          console.log('Регистрация прошла успешно')
+          handleLogin({email, password });
+          setStatusRequest(200)
         } else {
-          console.log('Ошибка #1 при регистрации')
+          setLoggedIn(false);
         }
       })
       .catch((err) => {
+        setLoggedIn(false);
+        setStatusRequest(err)
         console.log('Ошибка #2 при регистрации', err)
-
       })
   };
 
@@ -83,18 +83,20 @@ function App() {
       .then((result) => {
         if (result && result.token) {
           localStorage.setItem('jwt', result.token);
-          navigate('/movies')
+          navigate('/movies');
           setLoggedIn(true);
-          checkToken();
-          console.log('Логирование прошло успешно')
+          setStatusRequest(200)
         } else {
-          console.log('Ошибка логирования #1')
+          setLoggedIn(false);
         }
       })
       .catch((err) => {
+        setLoggedIn(false);
+        setStatusRequest(err);
         console.log('Ошибка логирования #2', err)
       })
   }
+
 
   // Функция выхода из аккаунта
   function logOut() {
@@ -102,6 +104,7 @@ function App() {
     setCurrentUser(defaultCurrentUser);
     localStorage.clear();
     navigate('/signin');
+    console.log('Выход')
   }
 
   // Функция обновления пользователя 
@@ -126,17 +129,23 @@ function App() {
           <Route
             path='/signup'
             element={
-              <Register
-                onRegister={handleRegister}
-              />}
+              <ProtectedRoute loggedIn={!loggedIn}>
+                <Register
+                  onRegister={handleRegister} 
+                  statusRequest={statusRequest}
+                  />
+              </ProtectedRoute>}
           />
 
           <Route
             path='/signin'
             element={
-              <Login
-                onLogin={handleLogin}
-              />}
+              <ProtectedRoute loggedIn={!loggedIn}>
+                <Login
+                  onLogin={handleLogin} 
+                  statusRequest={statusRequest}
+                  />
+              </ProtectedRoute>}
           />
 
           <Route path='/'
@@ -174,6 +183,7 @@ function App() {
           <Route path='/*'
             element={<NotFound />}
           />
+
 
         </Routes>
       </div >

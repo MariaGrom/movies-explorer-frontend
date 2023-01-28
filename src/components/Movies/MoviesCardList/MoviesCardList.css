@@ -19,6 +19,15 @@
   width: 100%;
 }
 
+.moviescardlist__not-found{
+  color:rgb(76, 76, 76);
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 500;
+  margin: 0;
+  padding: 0 ;
+}
+
 @media screen and (max-width: 768px) {
   .moviescardlist {
     width: calc(100% - 2 * 30px);

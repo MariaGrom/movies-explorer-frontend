@@ -9,12 +9,12 @@ class MainApi {
       return res.json();
     }
     return res
-    .json()
-    .then (({message, error})=>{
-      res.message = message || error `Ошибка ${res.status}`;
-      return Promise.reject(res.status);
-    })
-    
+      .json()
+      .then(({ message, error }) => {
+        res.message = message || error`Ошибка ${res.status}`;
+        return Promise.reject(res.status, res.message);
+      })
+
   }
 
   // Регистрация пользователя 
@@ -26,7 +26,7 @@ class MainApi {
         body: JSON.stringify(data)
       })
       .then(this._handleResponce)
-      
+
   };
 
   // Авторизация пользователя 
@@ -42,7 +42,7 @@ class MainApi {
 
   // Установка токена
   setToken(token) {
-    this._headers.Authorization = `Bearer ${ token }`
+    this._headers.Authorization = `Bearer ${token}`
   }
 
   // Получаем данные профиля
@@ -56,7 +56,7 @@ class MainApi {
   }
 
   // Обновление данных профиля
-  setUserInfo({name, email}) {
+  setUserInfo({ name, email }) {
     return fetch(`${this._url}/users/me`,
       {
         method: 'PATCH',
@@ -66,39 +66,39 @@ class MainApi {
       .then(this._handleResponce)
   }
 
-// Удаление карточки
-deleteCard(id) {
-  return fetch(`${this._url}/movies/${id}`,
-    {
-      method: 'DELETE',
-      headers: this._headers,
+  // Удаление карточки
+  deleteCard(id) {
+    return fetch(`${this._url}/movies/${id}`,
+      {
+        method: 'DELETE',
+        headers: this._headers,
+      })
+      .then(this._handleResponce)
+  }
+
+  // Сохранение карточки
+  savedCard(card) {
+    return fetch(`${this._url}/movies`,
+      {
+        method: 'POST',
+        headers: this._headers,
+        body: JSON.stringify(card)
+      })
+      .then(this._handleResponce)
+  }
+
+  // Получение всех карточек
+  getAllCards() {
+    return fetch(`${this._url}/movies`, {
+      headers: this._headers
     })
-    .then(this._handleResponce)
-}
-
-// Удаление карточки
-savedCard(card) {
-  return fetch(`${this._url}/movies`,
-    {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify(card)
-    })
-    .then(this._handleResponce)
-}
-
-
-getAllCards() {
-  return fetch(`${this._url}/movies`,{ 
-    headers: this._headers 
-  })
-    .then(this._handleResponce)
-}
+      .then(this._handleResponce)
+  }
 
 
 }
- const mainApi = new MainApi({
-  url:"http://localhost:3003",
+const mainApi = new MainApi({
+  url: "http://localhost:3003",
 
   // url: "https://api.mariagrom.movies.nomoredomains.club",
   headers: {
