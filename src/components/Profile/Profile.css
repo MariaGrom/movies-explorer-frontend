@@ -107,6 +107,17 @@
   color: #ee3465;
 }
 
+.profile__change{
+  color: #919191;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 10px;
+}
+
 @media screen and (max-width: 768px) {
   .profile__greetings {
     padding: 236px 0 0 0;

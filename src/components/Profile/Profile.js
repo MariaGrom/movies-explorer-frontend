@@ -19,12 +19,16 @@ function Profile(props) {
   const [emailValid, setEmailValid] = useState(false);
 
   // Переменная состояния статуса изменений
-  const [messageStatus, setMessageStatus] = useState("");
+  const [messageStatus, setMessageStatus] = useState("!!");
 
   // Переменная состония валидности формы
   const [formValid, setFormValid] = useState(false);
 
   const [isEditDone, setIsEditDone] = useState(false);
+
+
+  // Внесение данных
+  const [initChange, setInitChange] = useState(true);
 
 
   // После загрузки текущего пользователя из API его данные будут использованы в управляемых компонентах.
@@ -63,6 +67,7 @@ function Profile(props) {
   function handleChangeName(e) {
     setName(e.target.value);
     setMessageStatus('');
+    setInitChange(false)
     const nameRegex = /^[а-яА-ЯёЁa-zA-Z -]+$/g
 
     if (e.target.value.length < 2 || e.target.value.length > 30) {
@@ -84,6 +89,7 @@ function Profile(props) {
   function handleChangeEmail(e) {
     setEmail(e.target.value);
     setMessageStatus('');
+    setInitChange(false)
     const emailRegex = /^([\w]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if (!emailRegex.test(String(e.target.value).toLocaleLowerCase())) {
       setMessageStatus('Некорректный email');
@@ -153,6 +159,7 @@ function Profile(props) {
           </label>
         </fieldset >
         <div className="profile__buttons">
+        {initChange && <span className="profile__change">Для обновления данных нужно внести изменения в форму</span>}
           <span className={`profile__message ${(isEditDone && (statusRequest === 200)) ? "profile__message_success" : ""}`}>{messageStatus}</span>
           <button type="submit" onSubmit={handleSubmit} disabled={!formValid} className={`profile__button profile__edit ${formValid ? "" : "profile__button_disabled"}`} >Редактировать</button>
           <button type="button" className="profile__button profile__checkout" onClick={logOut}>Выйти из аккаунта</button>
