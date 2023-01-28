@@ -23,63 +23,65 @@ function Login({ onLogin, statusRequest }) {
   // Переменная состония валидности формы
   const [formValid, setFormValid] = useState(false);
 
-    // Обработка запроса
-    function handleStatusRequest() {
-      if (statusRequest === 409) {
-        setMessageStatus("Пользователь с такой почтой уже существует")
-      } else if (statusRequest === 500) {
-        setMessageStatus("Произошла ошибка сервера. Попробуйте ввести изменения позднее")
-      } else if (statusRequest === 400) {
-        setMessageStatus("Некорректно введены данные")
-      } else {
-        setMessageStatus("")
-      }
+  // Обработка запроса с сервера
+  function handleStatusRequest() {
+    if (statusRequest === 401) {
+      setMessageStatus("Такого пользователя не существует. Придется регистрироваться")
+    } else if (statusRequest === 500) {
+      setMessageStatus("Произошла ошибка сервера. Попробуйте ввести изменения позднее")
+    } else if (statusRequest === 400) {
+      setMessageStatus("Некорректно введены данные")
+    } else {
+      setMessageStatus("")
     }
+  }
+
+  // Отслеживание состония ответов с сервера
+  useEffect(() => {
+    handleStatusRequest()
+  }, [statusRequest])
+
 
   // Функция изменения имени пользователя и проверка формы
   function handleChangeEmail(e) {
     setEmail(e.target.value);
+    setMessageStatus("");
     const re = /^([\w]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    if (!re.test(String(e.target.value).toLocaleLowerCase())) {
-      setEmailError('Некорректный email');
-    } else if (e.target.value.length === 0) {
+
+    if (e.target.value.length === 0) {
       setEmailError('Поле не может быть пустым');
+      setEmailValid(false);
+    } else if (!re.test(String(e.target.value).toLocaleLowerCase())) {
+      setEmailError('Некорректный email');
+      setEmailValid(false);
     } else {
       setEmailError('');
+      setEmailValid(true);
     }
   }
 
   // Функция изменения пароля пользователя и проверка формы
   function handleChangePassword(e) {
     setPassword(e.target.value);
+    setMessageStatus("");
+
     if (!e.target.value) {
       setPasswordlError('Поле не может быть пустым');
+      setPasswordValid(false);
     } else {
       setPasswordlError('');
+      setPasswordValid(true);
     }
   }
 
-  // Функция не допускающая пустых полей в форме
-  const blurHandler = (e) => {
-    switch (e.target.name) {
-      case 'email':
-        setEmailDirty(true)
-        break
-      case 'password':
-        setPasswordDirty(true)
-        break
+  // Функция проверки валидности полей 
+  function inputValid() {
+    if (!emailValid || !passwordValid) {
+      setFormValid(false);
+      return;
     }
+    setFormValid(true);
   }
-
-  // Отслеживание состояния валидности формы
-  useEffect(() => {
-    if (emailError || passwordError) {
-      setFormValid(false)
-    } else {
-      setFormValid(true)
-    }
-  }, [emailError, passwordError])
-
 
   // Функция сохранения формы
   function handleSubmit(e) {
@@ -87,6 +89,10 @@ function Login({ onLogin, statusRequest }) {
     onLogin({ email, password })
   }
 
+  // Отслеживание состояния полей инпутов
+  useEffect(() => {
+    inputValid()
+  }, [email, password])
 
   return (
     <form onSubmit={handleSubmit} className="form">
@@ -103,12 +109,11 @@ function Login({ onLogin, statusRequest }) {
               className="form__input"
               type="text"
               name="email"
-              required=""
-              onBlur={e => blurHandler(e)}
               value={email}
               onChange={handleChangeEmail}
+              required
             />
-            {(emailDirty && emailError) && <span className="input__error input__error-email">{emailError}</span>}
+            <span className="input__error input__error-email">{emailError}</span>
           </label>
           <label className="form__field">
             <p className="form__text">Пароль</p>
@@ -117,14 +122,15 @@ function Login({ onLogin, statusRequest }) {
               className="form__input"
               type="password"
               name="password"
-              onBlur={e => blurHandler(e)}
               value={password}
               onChange={handleChangePassword}
+              required
             />
-            {(passwordDirty && passwordError) && <span className="input__error input__error-password">{passwordError}</span>}
+            <span className="input__error input__error-password">{passwordError}</span>
           </label>
         </fieldset>
         <div className="form__submit">
+          <span className="form__status-request">{messageStatus}</span>
           <button type="submit" disabled={!formValid} className={`form__submit-button ${formValid ? "" : "form__submit-button_disabled"}`}>Войти</button>
           <span className="form__subtitle">Ещё не зарегистрированы?<Link to="/signup" className="form__link">Регистрация</Link></span>
         </div>
@@ -134,12 +140,3 @@ function Login({ onLogin, statusRequest }) {
 }
 
 export default Login
-
-{/* <PageForm
-title="Рады видеть!"
-buttonText="Войти"
-spanText="Ещё не зарегистрированы?"
-linkText="Регистрация"
-linkPath="/signup"
-onSubmit={props.onLogin}
-/> */}

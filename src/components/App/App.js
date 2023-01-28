@@ -175,7 +175,7 @@ function App() {
                 logOut={logOut}
                 dataUser={currentUser}
                 onUpdateUser={handleUpdateUser}
-                userStatusRequest={statusRequest}
+                statusRequest={statusRequest}
               />
             </ProtectedRoute>
           } />

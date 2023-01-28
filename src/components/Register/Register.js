@@ -26,7 +26,7 @@ function Register({ onRegister, statusRequest }) {
   // Переменная состония валидности формы
   const [formValid, setFormValid] = useState(false);
 
-  // Обработка запроса
+  // Обработка запроса с сервера
   function handleStatusRequest() {
     if (statusRequest === 409) {
       setMessageStatus("Пользователь с такой почтой уже существует")
@@ -39,7 +39,7 @@ function Register({ onRegister, statusRequest }) {
     }
   }
 
-  // Отслеживание состония ответов с сервера
+  // Отслеживание состояния ответов с сервера
   useEffect(() => {
     handleStatusRequest()
   }, [statusRequest])
@@ -88,6 +88,7 @@ function Register({ onRegister, statusRequest }) {
   function handleChangePassword(e) {
     setPassword(e.target.value);
     setMessageStatus("");
+
     if (!e.target.value) {
       setPasswordlError('Поле не может быть пустым');
       setPasswordValid(false);
