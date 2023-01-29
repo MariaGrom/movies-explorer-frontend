@@ -22,7 +22,7 @@ function Profile(props) {
   // Переменная состояния обновления данных
   const [formUpdated, setFormUpdated] = useState(false);
   // Внесение данных
-  const [initChange, setInitChange] = useState(true);
+  const [initChange, setInitChange] = useState(false);
 
 
   // После загрузки текущего пользователя из API его данные будут использованы в управляемых компонентах.
@@ -75,7 +75,7 @@ function Profile(props) {
       setMessageStatus('Используется недопустимый символ в поле "Имя"');
       setNameValid(false);
     } else {
-      setMessageStatus('');
+      setMessageStatus("");
       setNameValid(true);
     }
   }
@@ -83,7 +83,7 @@ function Profile(props) {
   // Функция изменения почты
   function handleChangeEmail(e) {
     setEmail(e.target.value);
-    setMessageStatus('');
+    setMessageStatus("");
     setInitChange(false)
     const emailRegex = /^([\w]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if (!emailRegex.test(String(e.target.value).toLocaleLowerCase())) {
@@ -154,7 +154,7 @@ function Profile(props) {
           </label>
         </fieldset >
         <div className="profile__buttons">
-          {initChange && <span className="profile__change">Для обновления данных нужно внести изменения в форму</span>}
+          {!initChange && <span className="profile__change">Для обновления данных нужно внести изменения в форму</span>}
           <span className={`profile__message ${formUpdated ? "profile__message_success" : ""}`}>{messageStatus}</span>
           <button type="submit" onSubmit={handleSubmit} disabled={!formValid} className={`profile__button profile__edit ${formValid ? "" : "profile__button_disabled"}`} >Редактировать</button>
           <button type="button" className="profile__button profile__checkout" onClick={logOut}>Выйти из аккаунта</button>

@@ -32,38 +32,21 @@ function SearchForm(props) {
 
   // Функция изменения input поиска
   const handleChange = (e) => {
-    const {
-      name,
-      value: inputValue,
-      validationMessage,
-    } = e.target;
+    const { name, value: inputValue, validationMessage } = e.target;
 
-    const updatedValue = {
-      ...value,
-      [name]: inputValue
-    }
+    const updatedValue = { ...value, [name]: inputValue }
     if (page === 'movies') {
       localStorage.setItem('search-movies', JSON.stringify(updatedValue));
     }
     setValue(updatedValue);
-    setError((state) => ({
-      ...state,
-      [name]: validationMessage,
-    })
-    );
+    setError((state) => ({ ...state, [name]: validationMessage }));
     setIsDisabledButton(!formRef.current.checkValidity())
   };
 
   // Функция отработки чекбокса
   const handleCheckbox = (e) => {
-    const {
-      name,
-      checked
-    } = e.target;
-    const updatedValue = {
-      ...value,
-      [name]: checked
-    };
+    const { name, checked } = e.target;
+    const updatedValue = { ...value, [name]: checked };
 
     localStorage.setItem('search-movies', JSON.stringify(updatedValue));
     setValue(updatedValue);
