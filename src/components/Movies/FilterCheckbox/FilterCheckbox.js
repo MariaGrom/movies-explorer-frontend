@@ -3,10 +3,9 @@ import './FilterCheckbox.css'
 
 function FilterCheckbox({onChange, checked}) {
 
-
   return (
     <label className="switch">
-       <input onChange={onChange} type="checkbox" name='isShorts'  checked={checked} id='switch' />
+       <input onChange={onChange} type="checkbox" name='isShortsMovie'  checked={checked} id='switch' />
       <span className="switch__slider"></span>
     </label>
   )

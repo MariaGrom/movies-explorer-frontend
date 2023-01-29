@@ -1,38 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import './Login.css';
-import PageForm from '../PageForm/PageForm';
 import logo from '../../img/logo-min.png';
 import { Link } from 'react-router-dom';
+import PageForm from '../PageForm/PageForm';
 
 function Login({ onLogin, statusRequest }) {
 
+  // Переменные состояния полей почты и пароля 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   // Переменные состояния ошибок при заполнении полей
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordlError] = useState('');
-
   // Переменные валидности полей при заполнении
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
-
   // Переменная состояния статуса изменений
   const [messageStatus, setMessageStatus] = useState("");
-
   // Переменная состония валидности формы
   const [formValid, setFormValid] = useState(false);
 
   // Обработка запроса с сервера
   function handleStatusRequest() {
     if (statusRequest === 401) {
-      setMessageStatus("Такого пользователя не существует. Придется регистрироваться")
+      setMessageStatus("Такого пользователя не существует. Придется регистрироваться");
     } else if (statusRequest === 500) {
-      setMessageStatus("Произошла ошибка сервера. Попробуйте ввести изменения позднее")
+      setMessageStatus("Произошла ошибка сервера. Попробуйте ввести изменения позднее");
     } else if (statusRequest === 400) {
-      setMessageStatus("Некорректно введены данные")
+      setMessageStatus("Некорректно введены данные");
     } else {
-      setMessageStatus("")
+      setMessageStatus("");
     }
   }
 
@@ -136,7 +133,7 @@ function Login({ onLogin, statusRequest }) {
         </div>
       </div>
     </form>
-  );
+  )
 }
 
 export default Login

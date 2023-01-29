@@ -140,8 +140,12 @@
   }
   .navigation__account {
     padding: 0 30px 0 0;
+  }
+
+  .navigation__account-logged{
     display: none;
   }
+
   .navigation__account-logout {
     padding: 0 30px 0 0;
   }

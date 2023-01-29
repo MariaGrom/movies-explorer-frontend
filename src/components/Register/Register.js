@@ -6,36 +6,33 @@ import { Link } from 'react-router-dom';
 
 function Register({ onRegister, statusRequest }) {
 
+  // Переменные состояния полей почты и пароля 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   // Переменные состояния ошибок при заполнении полей
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordlError] = useState('');
-
   // Переменные валидности полей при заполнении
   const [nameValid, setNameValid] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
-
   // Переменная состояния статуса изменений
   const [messageStatus, setMessageStatus] = useState("");
-
   // Переменная состония валидности формы
   const [formValid, setFormValid] = useState(false);
 
   // Обработка запроса с сервера
   function handleStatusRequest() {
     if (statusRequest === 409) {
-      setMessageStatus("Пользователь с такой почтой уже существует")
+      setMessageStatus("Пользователь с такой почтой уже существует");
     } else if (statusRequest === 500) {
-      setMessageStatus("Произошла ошибка сервера. Попробуйте ввести изменения позднее")
+      setMessageStatus("Произошла ошибка сервера. Попробуйте ввести изменения позднее");
     } else if (statusRequest === 400) {
-      setMessageStatus("Некорректно введены данные")
+      setMessageStatus("Некорректно введены данные");
     } else {
-      setMessageStatus("")
+      setMessageStatus("");
     }
   }
 
@@ -173,7 +170,6 @@ function Register({ onRegister, statusRequest }) {
         </div>
       </div>
     </form>
-
   );
 }
 

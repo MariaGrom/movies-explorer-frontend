@@ -5,20 +5,18 @@ import '../FilterCheckbox/FilterCheckbox.css';
 
 function SearchForm(props) {
 
-  // const { filterCards, required = true, page, updateSearch } = props;
   const { filterCards, required = true, page } = props;
 
   // Переменная состояния кнопки поиска - активна/ не активна
   const [isDisabledButton, setIsDisabledButton] = useState(true);
   // Переменная состояния ошибки
-  const [error, setError] = useState({ name: '', isShorts: '' });
+  const [error, setError] = useState({ name: '', isShortsMovie: '' });
   // Переменная состония поля input поиска
-  const [value, setValue] = useState({ name: '', isShorts: false });
+  const [value, setValue] = useState({ name: '', isShortsMovie: false });
 
   const formRef = useRef(null);
 
   // Эффект отслеживания состояния поля input поиска 
-
   useEffect(() => {
     const searchMovies = JSON.parse(localStorage.getItem('search-movies'));
     if (searchMovies) {
@@ -27,7 +25,7 @@ function SearchForm(props) {
     }
     if (page === 'saved-movies') {
       filterCards(value);
-      setValue({ name: '', isShorts: false });
+      setValue({ name: '', isShortsMovie: false });
     }
   }, []);
 
@@ -96,7 +94,7 @@ function SearchForm(props) {
 
           <FilterCheckbox
             onChange={handleCheckbox}
-            checked={value.isShorts}
+            checked={value.isShortsMovie}
           />
 
           <p className="searchform__text">Короткометражки</p>

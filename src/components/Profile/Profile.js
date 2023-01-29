@@ -9,24 +9,18 @@ function Profile(props) {
 
   // Подписываемся на контекст CurrentUserContext
   const currentUser = useContext(CurrentUserContext)
-
   // Переменные состояния данных пользователя
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
-
   // Переменные валидности полей при заполнении
   const [nameValid, setNameValid] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
-
   // Переменная состояния статуса изменений
-  const [messageStatus, setMessageStatus] = useState("!!");
-
-  // Переменная состония валидности формы
+  const [messageStatus, setMessageStatus] = useState("");
+  // Переменная состояния валидности формы
   const [formValid, setFormValid] = useState(false);
-
-  const [isEditDone, setIsEditDone] = useState(false);
-
-
+  // Переменная состояния обновления данных
+  const [formUpdated, setFormUpdated] = useState(false);
   // Внесение данных
   const [initChange, setInitChange] = useState(true);
 
@@ -40,7 +34,11 @@ function Profile(props) {
 
   // Обработка запроса с сервера
   function handleStatusRequest() {
-    if (statusRequest === 409) {
+    if (statusRequest === 200) {
+      setMessageStatus("Данные успешно обновлены");
+      setFormValid(false);
+      setFormUpdated(true);
+    } else if (statusRequest === 409) {
       setMessageStatus("Пользователь с такой почтой уже существует");
       setFormValid(false);
     } else if (statusRequest === 500) {
@@ -48,9 +46,6 @@ function Profile(props) {
       setFormValid(false);
     } else if (statusRequest === 400) {
       setMessageStatus("Некорректно введены данные");
-      setFormValid(false);
-    } else if (statusRequest === 200) {
-      setMessageStatus("Данные успешно обновлены");
       setFormValid(false);
     } else {
       setMessageStatus("");
@@ -61,7 +56,7 @@ function Profile(props) {
   // Отслеживание состояния ответов с сервера
   useEffect(() => {
     handleStatusRequest()
-  }, [statusRequest, isEditDone])
+  }, [statusRequest, formUpdated])
 
   // Функция изменения имени
   function handleChangeName(e) {
@@ -121,10 +116,10 @@ function Profile(props) {
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
-    setIsEditDone(true);
+    setFormUpdated(false);
     // Передаём значения управляемых компонентов во внешний обработчик
-    onUpdateUser({ name, email, setIsEditDone });
-    setMessageStatus('Данные успешно обновлены');
+    onUpdateUser({ name, email, setFormUpdated });
+     setMessageStatus("");
   }
 
   return (
@@ -159,8 +154,8 @@ function Profile(props) {
           </label>
         </fieldset >
         <div className="profile__buttons">
-        {initChange && <span className="profile__change">Для обновления данных нужно внести изменения в форму</span>}
-          <span className={`profile__message ${(isEditDone && (statusRequest === 200)) ? "profile__message_success" : ""}`}>{messageStatus}</span>
+          {initChange && <span className="profile__change">Для обновления данных нужно внести изменения в форму</span>}
+          <span className={`profile__message ${formUpdated ? "profile__message_success" : ""}`}>{messageStatus}</span>
           <button type="submit" onSubmit={handleSubmit} disabled={!formValid} className={`profile__button profile__edit ${formValid ? "" : "profile__button_disabled"}`} >Редактировать</button>
           <button type="button" className="profile__button profile__checkout" onClick={logOut}>Выйти из аккаунта</button>
         </div>

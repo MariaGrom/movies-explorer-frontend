@@ -5,57 +5,55 @@ import MoviesCardList from './MoviesCardList/MoviesCardList';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import moviesApi from '../../utils/MoviesApi';
-import Preloader from './Preloader/Preloader';
 import mainApi from '../../utils/MainApi';
 
-const calcCardCounter = () => {
-  const counters = {
+// Постоянная, определяющая количество отображаемых карточек на экране
+const displayOfCards = () => {
+  const display = {
     start: 12,
     load: 3
   }
   if (window.innerWidth < 990) {
-    counters.start = 8;
-    counters.load = 2;
+    display.start = 8;
+    display.load = 2;
   }
   if (window.innerWidth < 767) {
-    counters.start = 5;
-    counters.load = 1;
+    display.start = 5;
+    display.load = 1;
   }
-  return counters
+  return display
 }
-
 
 function Movies({ loggedIn }) {
 
-  const counters = calcCardCounter();
-
-  // Переменная состония контейнера для карточек
-  const [cardsCounter, setCardsCounter] = useState(counters.start)
-  // Переменная состония для карточек 
+  // Переменная отображения карточек на экране
+  const display = displayOfCards();
+  // Переменная состояния для карточек 
   const [cards, setCards] = useState([]);
-  // Переменная состония для фильтрации фильмов
+  // Переменная состояния для фильтрации карточек
   const [filteredCards, setFilteredCards] = useState([]);
   // Переменная поиска
-  const [searchFormWasInit, setSearchFormWasInit] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(false);
+  // Переменная состояния контейнера для карточек
+  const [displayedCards, setDisplayedCards] = useState(display.start);
   // Переменная прелоадера
   const [statusPreloader, setStatusPreloader] = useState(false);
 
-
   // Функция загрузки карточек
-  const loadCards = () => {
-    const counters = calcCardCounter();
-    setCardsCounter(cardsCounter + counters.load)
+  const loadingCards = () => {
+    const display = displayOfCards();
+    setDisplayedCards(displayedCards + display.load)
   }
 
   // Функция фильтрации карточек
   const filterCards = (search) => {
-    setSearchFormWasInit(true)
+    setSearchQuery(true)
     // Фильтр карточек по названию и продолжительности
     const filter = (cards) => {
       setFilteredCards(cards.filter((card) => {
-        const isName = card.nameRU.toLowerCase().includes(search.name.toLowerCase());
-        const isShorts = search.isShorts ? card.duration <= 40 : true;
-        return isName && isShorts;
+        const isNameMovie = card.nameRU.toLowerCase().includes(search.name.toLowerCase());
+        const isShortsMovie = search.isShortsMovie ? card.duration <= 40 : true;
+        return isNameMovie && isShortsMovie;
       }))
     }
     if (cards.length === 0) {
@@ -66,20 +64,20 @@ function Movies({ loggedIn }) {
         mainApi.setToken(token);
         setStatusPreloader(true);
         Promise.all([moviesApi.getAllCards(), mainApi.getAllCards()])
-          .then(([beatCards, { data: myCards }]) => {
-            const preparedCards = beatCards.map(card => {
-              const myCard = myCards.find((myCard) => myCard.movieId === card.id);
+          .then(([beatCards, { data: localCards }]) => {
+            const combinedCards = beatCards.map(card => {
+              const localCard = localCards.find((localCard) => localCard.movieId === card.id);
               // Задаем единое название для карточек с битфильма и карточек с нашего сервера
-              card._id = myCard !== undefined ? myCard._id : '';
+              card._id = localCard !== undefined ? localCard._id : '';
               card.movieId = card.id;
               card.thumbnail = `https://api.nomoreparties.co/${card.image.url}`;
-              card.saved = myCard !== undefined;
+              card.saved = localCard !== undefined;
               return card;
             })
-            setCards(preparedCards);
-            filter(preparedCards);
+            setCards(combinedCards);
+            filter(combinedCards);
             // Сохраняем фильмы с Битфильма в localStorage
-            localStorage.setItem('local-movies', JSON.stringify(preparedCards));
+            localStorage.setItem('local-movies', JSON.stringify(combinedCards));
             setStatusPreloader(false);
           });
       } else {
@@ -88,29 +86,29 @@ function Movies({ loggedIn }) {
       }
     } else {
       filter(cards);
-      setCardsCounter(counters.start)
+      setDisplayedCards(display.start)
     }
   }
 
-  // Сохранение фильмов 
+  // Взаимодействие с карточками (постановка и снятие лайка с карточки)
   const handleSavedCard = (card) => {
     if (card.saved) {
       mainApi.deleteCard(card._id)
         .then(() => {
           setCards((beatCards) => {
-            const updatedCards = beatCards.map(beatCard => {
+            const editedCards = beatCards.map(beatCard => {
               if (beatCard._id === card._id) {
                 beatCard.saved = false;
               }
               return beatCard;
             })
-            localStorage.setItem('local-movies', JSON.stringify(updatedCards));
-            return updatedCards;
+            localStorage.setItem('local-movies', JSON.stringify(editedCards));
+            return editedCards;
           })
           localStorage.removeItem('saved-movies');
         })
     } else {
-      const newCard = {
+      const recentCard = {
         country: card.country,
         director: card.director,
         duration: card.duration,
@@ -123,11 +121,11 @@ function Movies({ loggedIn }) {
         nameRU: card.nameRU,
         nameEN: card.nameEN,
       }
-      mainApi.savedCard(newCard)
+      mainApi.savedCard(recentCard)
         .then((serverCard) => {
           setCards((beatCards) => {
             localStorage.removeItem('saved-movies');
-            const updatedCards = beatCards.map(beatCard => {
+            const editedCards = beatCards.map(beatCard => {
               if (beatCard.id === serverCard.movieId) {
                 beatCard.saved = true;
                 beatCard._id = serverCard._id;
@@ -136,8 +134,8 @@ function Movies({ loggedIn }) {
               }
               return beatCard;
             })
-            localStorage.setItem('local-movies', JSON.stringify(updatedCards));
-            return updatedCards;
+            localStorage.setItem('local-movies', JSON.stringify(editedCards));
+            return editedCards;
           })
         })
     }
@@ -150,22 +148,19 @@ function Movies({ loggedIn }) {
       <SearchForm
         filterCards={filterCards}
         page="movies"
-        searchFormWasInit={searchFormWasInit}
       />
 
       <MoviesCardList
-        cards={filteredCards.filter((_, i) => i < cardsCounter)}
+        cards={filteredCards.filter((_, i) => i < displayedCards)}
         handleSavedCard={handleSavedCard}
-        loadCards={loadCards}
-        searchFormWasInit={searchFormWasInit}
+        searchQuery={searchQuery}
+        statusPreloader={statusPreloader}
       />
 
-      {statusPreloader && <Preloader />}
-
-      {(filteredCards.length > cardsCounter) &&
-       <div className="movies__add-button">
-        <button className="movies__button" onClick={loadCards}>Ещё</button>
-      </div>}
+      {(filteredCards.length > displayedCards) &&
+        <div className="movies__add-button">
+          <button className="movies__button" onClick={loadingCards}>Ещё</button>
+        </div>}
 
       <Footer />
     </section>

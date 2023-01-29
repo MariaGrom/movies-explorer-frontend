@@ -37,7 +37,6 @@ function App() {
           if (user && user.data) {
             setCurrentUser(user.data);
             setLoggedIn(true);
-            console.log('токен ОК');
           } else {
             setLoggedIn(false);
             navigate('/signin');

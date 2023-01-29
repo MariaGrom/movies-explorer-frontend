@@ -4,6 +4,7 @@ class MainApi {
     this._headers = headers
   }
 
+  // Обработчик ошибок
   _handleResponce(res) {
     if (res.ok) {
       return res.json();
@@ -94,13 +95,11 @@ class MainApi {
     })
       .then(this._handleResponce)
   }
-
-
 }
-const mainApi = new MainApi({
-  url: "http://localhost:3003",
 
-  // url: "https://api.mariagrom.movies.nomoredomains.club",
+const mainApi = new MainApi({
+  // url: "http://localhost:3003",
+  url: "https://api.mariagrom.movies.nomoredomains.club",
   headers: {
     "content-type": "application/json",
     "Authorization": "",
