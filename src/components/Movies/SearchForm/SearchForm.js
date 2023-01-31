@@ -24,7 +24,7 @@ function SearchForm(props) {
       filterCards(searchMovies);
     }
     if (page === 'saved-movies') {
-      filterCards(value);
+      filterCards({ name: '', isShortsMovie: false });
       setValue({ name: '', isShortsMovie: false });
     }
   }, []);
@@ -48,7 +48,9 @@ function SearchForm(props) {
     const { name, checked } = e.target;
     const updatedValue = { ...value, [name]: checked };
 
+    if(page === 'movies') {
     localStorage.setItem('search-movies', JSON.stringify(updatedValue));
+    }
     setValue(updatedValue);
     filterCards(updatedValue);
   }

@@ -40,11 +40,13 @@ function App() {
           } else {
             setLoggedIn(false);
             navigate('/signin');
+            logOut();
           }
         })
         .catch((err) => {
           console.log('Ошибка токена в АПИ', err)
-          setLoggedIn(false)
+          setLoggedIn(false);
+          logOut();
         })
     } else {
       setLoggedIn(false);
@@ -67,6 +69,7 @@ function App() {
           setStatusRequest(200)
         } else {
           setLoggedIn(false);
+          logOut();
         }
       })
       .catch((err) => {
@@ -99,10 +102,11 @@ function App() {
 
   // Функция выхода из аккаунта
   function logOut() {
+    localStorage.clear();
     setLoggedIn(false);
     setCurrentUser(defaultCurrentUser);
-    localStorage.clear();
     navigate('/signin');
+    mainApi.setToken('');
     console.log('Выход')
   }
 
