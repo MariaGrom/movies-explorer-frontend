@@ -43,7 +43,7 @@ function App() {
           }
         })
         .catch((err) => {
-          console.log('Ошибка токена в АПИ' , err)
+          console.log('Ошибка токена в АПИ', err)
           setLoggedIn(false)
         })
     } else {
@@ -63,7 +63,7 @@ function App() {
     mainApi.register(registrationData)
       .then((result) => {
         if (result && result.data) {
-          handleLogin({email, password });
+          handleLogin({ email, password });
           setStatusRequest(200)
         } else {
           setLoggedIn(false);
@@ -107,15 +107,16 @@ function App() {
   }
 
   // Функция обновления пользователя 
-  function handleUpdateUser(userData) {
+  function handleUpdateUser(userData, callbackOk, callbackFail) {
+    console.log('userData', userData)
     mainApi.setUserInfo(userData)
       .then((userDataServer) => {
-        setCurrentUser({ ...currentUser, ...userDataServer })
-        setStatusRequest(200);
+        setCurrentUser({ ...currentUser, ...userDataServer.data })
+        callbackOk("Данные успешно обновлены")
       })
       .catch((err) => {
         console.log(err);
-        setStatusRequest(err);
+        callbackFail(err.message)
       })
   };
 
@@ -130,9 +131,9 @@ function App() {
             element={
               <ProtectedRoute loggedIn={!loggedIn}>
                 <Register
-                  onRegister={handleRegister} 
+                  onRegister={handleRegister}
                   statusRequest={statusRequest}
-                  />
+                />
               </ProtectedRoute>}
           />
 
@@ -141,9 +142,9 @@ function App() {
             element={
               <ProtectedRoute loggedIn={!loggedIn}>
                 <Login
-                  onLogin={handleLogin} 
+                  onLogin={handleLogin}
                   statusRequest={statusRequest}
-                  />
+                />
               </ProtectedRoute>}
           />
 
@@ -174,7 +175,6 @@ function App() {
                 logOut={logOut}
                 dataUser={currentUser}
                 onUpdateUser={handleUpdateUser}
-                statusRequest={statusRequest}
               />
             </ProtectedRoute>
           } />

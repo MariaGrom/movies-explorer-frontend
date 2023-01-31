@@ -6,14 +6,15 @@ class MainApi {
 
   // Обработчик ошибок
   _handleResponce(res) {
-    if (res.ok) {
-      return res.json();
-    }
+
     return res
       .json()
-      .then(({ message, error }) => {
-        res.message = message || error`Ошибка ${res.status}`;
-        return Promise.reject(res.status, res.message);
+      .then((response) => {
+        if (res.ok) {
+          return response;
+          
+        }
+        return Promise.reject(new Error(response.message));
       })
 
   }
@@ -98,8 +99,8 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  // url: "http://localhost:3003",
-  url: "https://api.mariagrom.movies.nomoredomains.club",
+  url: "http://localhost:3003",
+  // url: "https://api.mariagrom.movies.nomoredomains.club",
   headers: {
     "content-type": "application/json",
     "Authorization": "",

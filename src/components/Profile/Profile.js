@@ -5,127 +5,71 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 
 function Profile(props) {
 
-  const { loggedIn, logOut, onUpdateUser, statusRequest } = props;
+  const { loggedIn, logOut, onUpdateUser } = props;
 
   // Подписываемся на контекст CurrentUserContext
-  const currentUser = useContext(CurrentUserContext)
+  const currentUser = useContext(CurrentUserContext);
   // Переменные состояния данных пользователя
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
-  // Переменные валидности полей при заполнении
-  const [nameValid, setNameValid] = useState(false);
-  const [emailValid, setEmailValid] = useState(false);
   // Переменная состояния статуса изменений
   const [messageStatus, setMessageStatus] = useState("");
   // Переменная состояния валидности формы
   const [formValid, setFormValid] = useState(false);
-  // Переменная состояния обновления данных
-  const [formUpdated, setFormUpdated] = useState(false);
+  // Переменная состояния кнопки
+  const [buttonDisabled, setButtonDisabled] = useState(true);
   // Внесение данных
   const [initChange, setInitChange] = useState(false);
+  // Переменная состояния ошибок с сервера
+  const [apiError, setApiError] = useState();
+  //Переменная состояния успешного результата
+  const [updateForm, setUpdateForm] = useState();
 
 
   // После загрузки текущего пользователя из API его данные будут использованы в управляемых компонентах.
+  useEffect(() => {
+    setButtonDisabled(currentUser.name === name && currentUser.email === email)
+  }, [name, email, currentUser.name, currentUser.email]);
+
+
   useEffect(() => {
     setName(currentUser.name);
     setEmail(currentUser.email);
   }, [currentUser.name, currentUser.email]);
 
 
-  // Обработка запроса с сервера
-  function handleStatusRequest() {
-    if (statusRequest === 200) {
-      setMessageStatus("Данные успешно обновлены");
-      setFormValid(false);
-      setFormUpdated(true);
-    } else if (statusRequest === 409) {
-      setMessageStatus("Пользователь с такой почтой уже существует");
-      setFormValid(false);
-    } else if (statusRequest === 500) {
-      setMessageStatus("Произошла ошибка сервера. Попробуйте ввести изменения позднее");
-      setFormValid(false);
-    } else if (statusRequest === 400) {
-      setMessageStatus("Некорректно введены данные");
-      setFormValid(false);
-    } else {
-      setMessageStatus("");
-      setFormValid(true);
-    }
-  }
-
-  // Отслеживание состояния ответов с сервера
-  useEffect(() => {
-    handleStatusRequest()
-  }, [statusRequest, formUpdated])
-
   // Функция изменения имени
   function handleChangeName(e) {
     setName(e.target.value);
-    setMessageStatus('');
-    setInitChange(false)
-    const nameRegex = /^[а-яА-ЯёЁa-zA-Z -]+$/g
-
-    if (e.target.value.length < 2 || e.target.value.length > 30) {
-      setMessageStatus('Имя пользователя должно быть длинее 2 и меньше 30');
-      setNameValid(false);
-    } else if (e.target.value.length === 0) {
-      setMessageStatus('Поле "Имя" не может быть пустым');
-      setNameValid(false);
-    } else if (!nameRegex.test(String(e.target.value).toLocaleLowerCase())) {
-      setMessageStatus('Используется недопустимый символ в поле "Имя"');
-      setNameValid(false);
-    } else {
-      setMessageStatus("");
-      setNameValid(true);
-    }
+    setMessageStatus(e.target.validationMessage);
+    setInitChange(true);
+    setFormValid(e.target.closest('form').checkValidity());
+    setApiError('');
+    setUpdateForm('');
   }
 
   // Функция изменения почты
   function handleChangeEmail(e) {
     setEmail(e.target.value);
-    setMessageStatus("");
-    setInitChange(false)
-    const emailRegex = /^([\w]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    if (!emailRegex.test(String(e.target.value).toLocaleLowerCase())) {
-      setMessageStatus('Некорректный email');
-      setEmailValid(false);
-    } else if (e.target.value.length === 0) {
-      setMessageStatus('Поле "E-mail" не может быть пустым');
-      setEmailValid(false);
-    } else {
-      setMessageStatus('');
-      setEmailValid(true);
-    }
+    setInitChange(true);
+    setMessageStatus(e.target.validationMessage);
+    setFormValid(e.target.closest('form').checkValidity());
+    setApiError('');
+    setUpdateForm('');
   }
-
-  // Функция проверки валидности полей 
-  function inputValid() {
-    if (!nameValid || !emailValid) {
-      setFormValid(false);
-      return;
-    }
-    setFormValid(true);
-  }
-
-  // Отслеживание состояния полей инпутов
-  useEffect(() => {
-    inputValid()
-  }, [name, email])
 
   // Обработчик формы при submit
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
-    setFormUpdated(false);
     // Передаём значения управляемых компонентов во внешний обработчик
-    onUpdateUser({ name, email, setFormUpdated });
-     setMessageStatus("");
+    onUpdateUser({ name, email }, setUpdateForm, setApiError )
   }
 
   return (
     <div>
       <Header loggedIn={loggedIn} />
-      <form className="profile" onSubmit={handleSubmit} >
+      <form className="profile" onSubmit={handleSubmit} noValidate>
         <h2 className="profile__greetings">Привет, {name}!</h2>
         <fieldset className="profile__user">
           <label className="profile__data">
@@ -138,6 +82,9 @@ function Profile(props) {
               placeholder="Виталий"
               value={name}
               onChange={handleChangeName}
+              minLength={2}
+              maxLength={30}
+              required
             />
           </label>
           <label className="profile__data">
@@ -145,18 +92,21 @@ function Profile(props) {
             <input
               id="profile__email"
               className="profile__input"
-              type="text"
+              type="email"
               name="email"
               placeholder='pochta@yandex.ru'
               value={email}
               onChange={handleChangeEmail}
+              required
             />
           </label>
         </fieldset >
         <div className="profile__buttons">
           {!initChange && <span className="profile__change">Для обновления данных нужно внести изменения в форму</span>}
-          <span className={`profile__message ${formUpdated ? "profile__message_success" : ""}`}>{messageStatus}</span>
-          <button type="submit" onSubmit={handleSubmit} disabled={!formValid} className={`profile__button profile__edit ${formValid ? "" : "profile__button_disabled"}`} >Редактировать</button>
+          {messageStatus && <span className="profile__message" > {messageStatus} </span>}
+          {apiError  && <span className="profile__message" >{apiError}</span>}
+          {updateForm && <span className="profile__message profile__message_success">{updateForm}</span>}
+          <button type="submit" onSubmit={handleSubmit} disabled={!formValid || buttonDisabled} className={`profile__button profile__edit ${formValid ? "" : "profile__button_disabled"}`} >Редактировать</button>
           <button type="button" className="profile__button profile__checkout" onClick={logOut}>Выйти из аккаунта</button>
         </div>
       </form>
