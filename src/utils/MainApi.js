@@ -99,8 +99,8 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  url: "http://localhost:3003",
-  // url: "https://api.mariagrom.movies.nomoredomains.club",
+  // url: "http://localhost:3003",
+  url: "https://api.mariagrom.movies.nomoredomains.club",
   headers: {
     "content-type": "application/json",
     "Authorization": "",
