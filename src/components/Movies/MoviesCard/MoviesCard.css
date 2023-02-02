@@ -41,6 +41,11 @@
   font-weight: 500;
   margin: 0;
   padding: 0;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 206px;
 }
 
 .moviescard__subtitle{
@@ -73,12 +78,23 @@
   background-image: url('../../../img/delete-min.png');
   width: 16px;
   height: 16px;
-
+  margin: 0;
+  padding: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: none;
+  background-color: #FDFDFD;
+  cursor: pointer;
 }
 
 .moviescard__button:hover {
   opacity: 0.9;
   transition: opacity 0.4s linear 0.1s;
+}
+
+
+.movies__trailerlink{
+text-decoration: none;
 }
 
 @media screen and (max-width: 768px) {

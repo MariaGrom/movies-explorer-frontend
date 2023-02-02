@@ -9,10 +9,14 @@ import Portfolio from './Portfolio/Portfolio';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
-function Main() {
+function Main(props) {
+
+  const {loggedIn} = props
   return (
     <main className="main">
-      <Header />
+      <Header  
+      loggedIn={loggedIn}
+      />
       <Promo />
       <NavTab />
       <AboutProject />

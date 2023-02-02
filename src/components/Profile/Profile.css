@@ -56,16 +56,20 @@
 
 .profile__input:focus {
   outline: none;
-  border-right:2px solid #2BE080;
+  border-right: 2px solid #2be080;
 }
 
-.profile__error {
+.profile__message {
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
   color: #ff004c;
   padding: 0 0 20px 0;
   margin: 0;
+}
+
+.profile__message_success {
+  color: #2be080;
 }
 
 .profile__buttons {
@@ -88,6 +92,10 @@
   background-color: transparent;
 }
 
+.profile__button_disabled {
+  color: #919191;
+}
+
 .profile__button:hover {
   opacity: 0.8;
   transition: opacity 0.4s linear 0.1s;
@@ -97,6 +105,17 @@
   padding: 16px 0 0 0;
   margin: 0;
   color: #ee3465;
+}
+
+.profile__change{
+  color: #919191;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 10px;
 }
 
 @media screen and (max-width: 768px) {
