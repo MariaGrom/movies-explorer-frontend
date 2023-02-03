@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './Profile.css';
 import Header from '../Header/Header';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext'
-
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+// Комментарий
 function Profile(props) {
 
   const { loggedIn, logOut, onUpdateUser } = props;
