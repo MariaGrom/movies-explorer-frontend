@@ -95,7 +95,7 @@ function Login({ onLogin, statusRequest }) {
     <form onSubmit={handleSubmit} className="form">
       <div className="form__greetings" >
         <Link to="/"><img className="form__logo" src={logo} alt="логотип" /></Link>
-        <h2 className="form__title">Рады видеть!</h2>
+        <h2 className="form__title">Рады!</h2>
       </div>
       <div className="form__main">
         <fieldset className="form__fields">
