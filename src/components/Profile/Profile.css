@@ -1,0 +1,144 @@
+.profile {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.profile__greetings {
+  margin: 0;
+  padding: 74px 0 0 0;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+}
+
+.profile__user {
+  display: flex;
+  max-width: 410px;
+  margin: 0 auto;
+  flex-direction: column;
+  padding: 123px 0 220px 0;
+  border: none;
+}
+
+.profile__data {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0 0 16px 0;
+  width: 100%;
+}
+
+.profile__data:last-of-type {
+  border-top: 1px solid #e8e8e8;
+  padding: 17px 0 0 0;
+}
+
+.profile__data-field {
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  margin: 0;
+  padding: 0;
+}
+
+.profile__input {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  text-align: right;
+  width: 50%;
+}
+
+.profile__input:focus {
+  outline: none;
+  border-right: 2px solid #2be080;
+}
+
+.profile__message {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: #ff004c;
+  padding: 0 0 20px 0;
+  margin: 0;
+}
+
+.profile__message_success {
+  color: #2be080;
+}
+
+.profile__buttons {
+  display: flex;
+  margin: 0;
+  padding: 0 0 70px 0;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile__button {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
+.profile__button_disabled {
+  color: #919191;
+}
+
+.profile__button:hover {
+  opacity: 0.8;
+  transition: opacity 0.4s linear 0.1s;
+}
+
+.profile__checkout {
+  padding: 16px 0 0 0;
+  margin: 0;
+  color: #ee3465;
+}
+
+.profile__change{
+  color: #919191;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__greetings {
+    padding: 236px 0 0 0;
+  }
+  .profile__user {
+    padding: 96px 0 258px 0;
+  }
+  .profile__buttons {
+    padding: 0 0 269px 0;
+  }
+}
+
+@media screen and (max-width: 448px) {
+  .profile__greetings {
+    padding: 70px 0 0 0;
+  }
+  .profile__user {
+    padding: 80px 0 379px 0;
+    max-width: 260px;
+  }
+  .profile__buttons {
+    padding: 0 0 40px 0;
+  }
+}
